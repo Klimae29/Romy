@@ -1,18 +1,21 @@
 body {
-  background-color: rgb(124, 245, 205);
+  background-image: url(../assets/images/index_univ_1.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
+
 #romy {
   font-size: 150px;
   transition: font-family 0.1s ease;
   text-align: center;
   margin-top: 20vh;
   margin-bottom: 20vh;
-  height: 80px
+  height: 80px;
+  color: black;
+  text-shadow:
+    0 0 2px white,
+    0 0 4px white;
 
-}
-
-#univ1 {
-  background-color: blanchedalmond;
-  display:none;
-  text-align: center;
 }

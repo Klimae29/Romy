@@ -1,16 +1,49 @@
 console.log("✅ Script index JS chargé !");
+document.fonts.ready.then(() => {
+  console.log("✅ Toutes les polices Google Fonts sont chargées !");
+});
 
 const fonts = [
-  "Arial, sans-serif",
-  "'Courier New', monospace",
-  "'Georgia', serif",
+  "'Anton', sans-serif",
+  "'Orbitron', sans-serif",
+  "'Amatic SC', cursive",
   "'Comic Sans MS', cursive",
   "'Lucida Console', monospace",
-  "'Times New Roman', serif",
+  "'Pacifico', cursive",
   "'Trebuchet MS', sans-serif",
   "'Impact', sans-serif",
   "'Brush Script MT', cursive"
 ];
+
+const images = [
+  "index_univ_1.png",
+  "index_univ_2.png",
+  "index_univ_3.png",
+  "index_univ_4.png",
+  "index_univ_5.png",
+  "index_univ_6.png",
+  "index_univ_7.png",
+  "index_univ_8.png",
+  "index_univ_9.png"
+];
+
+// Préchargement des images
+let loadedImages = 0;
+
+const preloadImages = () => {
+  images.forEach((src) => {
+    const img = new Image();
+    img.src = `../assets/images/${src}`;
+    img.onload = () => {
+      loadedImages++;
+      if (loadedImages === images.length) {
+        console.log("✅ Toutes les images sont préchargées !");
+      }
+    };
+  });
+};
+
+preloadImages();
 
 const romy = document.getElementById("romy");
 let index = 0;
@@ -21,10 +54,13 @@ function startFontAnimation() {
 
   animationStarted = true;
 
+
+
   setInterval(() => {
     romy.style.fontFamily = fonts[index];
+    document.body.style.backgroundImage = `url(../assets/images/${images[index]})`;
     index = (index + 1) % fonts.length;
-  }, 100); // toutes les 0,1 sec
+  }, 200); // toutes les 0,1 sec
 }
 
 // Déclenche l’animation au premier scroll
