@@ -1,0 +1,18 @@
+body {
+  background-color: rgb(124, 245, 205);
+}
+#romy {
+  font-size: 150px;
+  transition: font-family 0.1s ease;
+  text-align: center;
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+  height: 80px
+
+}
+
+#univ1 {
+  background-color: blanchedalmond;
+  display:none;
+  text-align: center;
+}
