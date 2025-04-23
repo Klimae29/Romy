@@ -3,68 +3,80 @@ document.fonts.ready.then(() => {
   console.log("✅ Toutes les polices Google Fonts sont chargées !");
 });
 
-const fonts = [
-  "'Anton', sans-serif",
-  "'Orbitron', sans-serif",
-  "'Amatic SC', cursive",
-  "'Comic Sans MS', cursive",
-  "'Lucida Console', monospace",
-  "'Pacifico', cursive",
-  "'Trebuchet MS', sans-serif",
-  "'Impact', sans-serif",
-  "'Brush Script MT', cursive"
-];
-
-const images = [
-  "index_univ_1.png",
-  "index_univ_2.png",
-  "index_univ_3.png",
-  "index_univ_4.png",
-  "index_univ_5.png",
-  "index_univ_6.png",
-  "index_univ_7.png",
-  "index_univ_8.png",
-  "index_univ_9.png"
+const pairs = [
+  { font: "'Anton', sans-serif", image: "index_univ_1.png" },
+  { font: "'Orbitron', sans-serif", image: "index_univ_2.png" },
+  { font: "'Amatic SC', cursive", image: "index_univ_3.png" },
+  { font: "'Comic Sans MS', cursive", image: "index_univ_4.png" },
+  { font: "'Lucida Console', monospace", image: "index_univ_5.png" },
+  { font: "'Pacifico', cursive", image: "index_univ_6.png" },
+  { font: "'Trebuchet MS', sans-serif", image: "index_univ_7.png" },
+  { font: "'Impact', sans-serif", image: "index_univ_8.png" },
+  { font: "'Brush Script MT', cursive", image: "index_univ_9.png" }
 ];
 
 // Préchargement des images
-let loadedImages = 0;
-
-const preloadImages = () => {
-  images.forEach((src) => {
-    const img = new Image();
-    img.src = `../assets/images/${src}`;
-    img.onload = () => {
-      loadedImages++;
-      if (loadedImages === images.length) {
-        console.log("✅ Toutes les images sont préchargées !");
-      }
-    };
-  });
-};
-
-preloadImages();
+pairs.forEach(({ image }) => {
+  const img = new Image();
+  img.src = `../assets/images/${image}`;
+});
 
 const romy = document.getElementById("romy");
 let index = 0;
+let toggle = true;
 let animationStarted = false;
 
-function startFontAnimation() {
-  if (animationStarted) return; // empêche de lancer plusieurs fois
+// Création des 2 calques background
+const bg1 = document.createElement("div");
+const bg2 = document.createElement("div");
 
-  animationStarted = true;
+[bg1, bg2].forEach(bg => {
+  Object.assign(bg.style, {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    transition: "opacity 0.8s ease",
+    zIndex: -1,
+    opacity: 0,
+  });
+  document.body.appendChild(bg);
+});
 
+bg1.style.opacity = 1; // Pour afficher la première image au départ
 
+function changeBackgroundAndFont() {
+  const current = pairs[index];
 
-  setInterval(() => {
-    romy.style.fontFamily = fonts[index];
-    document.body.style.backgroundImage = `url(../assets/images/${images[index]})`;
-    index = (index + 1) % fonts.length;
-  }, 200); // toutes les 0,1 sec
+  // Change la police
+  romy.style.fontFamily = current.font;
+
+  // Change l'image de fond
+  const currentBg = toggle ? bg1 : bg2;
+  const nextBg = toggle ? bg2 : bg1;
+
+  nextBg.style.backgroundImage = `url(../assets/images/${current.image})`;
+  nextBg.style.opacity = 1;
+  currentBg.style.opacity = 0;
+
+  toggle = !toggle;
+  index = (index + 1) % pairs.length;
 }
 
-// Déclenche l’animation au premier scroll
+function startAnimation() {
+  if (animationStarted) return;
+  animationStarted = true;
+
+  changeBackgroundAndFont(); // Premier changement immédiat
+  setInterval(changeBackgroundAndFont, 200);
+}
+
+// Déclenchement au 1er scroll
 window.addEventListener("wheel", function onScroll() {
-  startFontAnimation();
-  window.removeEventListener("wheel", onScroll); // on l'enlève après le 1er déclenchement
+  startAnimation();
+  window.removeEventListener("wheel", onScroll);
 });
