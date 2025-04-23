@@ -1,3 +1,4 @@
+
 console.log("✅ Script index JS chargé !");
 document.fonts.ready.then(() => {
   console.log("✅ Toutes les polices Google Fonts sont chargées !");

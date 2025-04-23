@@ -1,0 +1,74 @@
+/* animations.css - Toutes les animations du site ROMY */
+
+/* Animation du titre d'accueil */
+.home-title {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+.home.active .home-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animations des éléments de projet */
+.project-title {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: 0.2s;
+}
+
+.project-video-container {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: 0.4s;
+}
+
+.project-description {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: 0.6s;
+}
+
+.section.active .project-title,
+.section.active .project-video-container,
+.section.active .project-description {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animation de l'indicateur de défilement */
+.scroll-indicator {
+  animation: fadeInOut 2s infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* Animation d'ouverture du menu */
+.menu-toggle {
+  transition: opacity 0.3s ease;
+}
+
+.menu-panel {
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 0.9);
+}
+
+.menu-items a {
+  transition: transform 0.3s ease;
+}
+
+.menu-items a::after {
+  transition: width 0.3s ease;
+}
+
+/* Transition de couleur d'arrière-plan */
+body {
+  transition: background-color 1.5s ease;
+}
