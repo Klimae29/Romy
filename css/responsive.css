@@ -1,0 +1,212 @@
+/* responsive.css - Mise à jour pour nouvelle disposition */
+
+/* Grand écran */
+@media (min-width: 1800px) {
+  .project-title {
+    font-size: 48px;
+  }
+
+  .project-description {
+    font-size: 18px;
+  }
+}
+
+/* Écran standard */
+@media (max-width: 1400px) {
+  .project-title {
+    font-size: 36px;
+  }
+
+  .project-description {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+}
+
+/* Moyen écran (laptop) */
+@media (max-width: 1200px) {
+  .home-title {
+    font-size: 100px;
+  }
+
+  .project-title {
+    font-size: 32px;
+  }
+
+  .project-description {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .project-title-container {
+    padding-left: 5%;
+  }
+
+  .project-description-container {
+    padding-right: 5%;
+  }
+}
+
+/* Tablette */
+@media (max-width: 992px) {
+  .project-container {
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "title"
+      "video"
+      "description";
+    gap: 20px;
+    align-content: center;
+    padding: 0 5%;
+  }
+
+  .project-title-container {
+    padding: 0;
+    text-align: center;
+  }
+
+  .project-title {
+    text-align: center;
+  }
+
+  .project-description-container {
+    padding: 0;
+    text-align: center;
+  }
+
+  .project-description {
+    text-align: center;
+  }
+
+  .project-video-container {
+    width: 100%;
+    padding-top: 56.25%; /* Retour au ratio 16:9 standard */
+  }
+
+  .home-title {
+    font-size: 80px;
+    letter-spacing: 10px;
+  }
+}
+
+/* Petit écran (tablette portrait) */
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 60px;
+    letter-spacing: 8px;
+  }
+
+  .project-title {
+    font-size: 28px;
+  }
+
+  .project-description {
+    font-size: 14px;
+  }
+
+  .menu-panel {
+    width: 100%;
+    max-width: none;
+  }
+
+  .menu-items a {
+    font-size: 18px;
+  }
+
+  .project-video-container {
+    width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .home-title {
+    font-size: 40px;
+    letter-spacing: 5px;
+  }
+
+  .project-title {
+    font-size: 24px;
+  }
+
+  .project-description {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .menu-toggle, .menu-close {
+    font-size: 14px;
+    top: 20px;
+    right: 20px;
+  }
+
+  .section {
+    padding: 0 15px;
+  }
+
+  .project-container {
+    gap: 10px;
+  }
+}
+
+/* Très petit écran */
+@media (max-width: 375px) {
+  .home-title {
+    font-size: 32px;
+    letter-spacing: 3px;
+  }
+
+  .project-title {
+    font-size: 20px;
+  }
+
+  .project-video-container {
+    margin: 5px 0;
+  }
+
+  .enter-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+/* Orientation paysage sur mobile avec hauteur réduite */
+@media (max-height: 600px) and (orientation: landscape) {
+  .project-container {
+    grid-template-columns: 25% 50% 25%;
+    grid-template-areas: "title video description";
+    align-items: center;
+  }
+
+  .project-video-container {
+    padding-top: 28.125%; /* 16:9 ratio pour 50% de largeur */
+  }
+
+  .project-title {
+    font-size: 20px;
+  }
+
+  .project-description {
+    font-size: 12px;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+
+  .home-title {
+    font-size: 40px;
+  }
+
+  .project-title-container,
+  .project-description-container {
+    text-align: left;
+  }
+}
+
+/* Très petite hauteur */
+@media (max-height: 450px) {
+  .project-description {
+    max-height: 100px;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+}

@@ -1,34 +1,63 @@
-console.log("✅ Script index JS chargé !");
+/**
+ * script-index.js - Script pour la page d'accueil
+ */
 
-const fonts = [
-  "Arial, sans-serif",
-  "'Courier New', monospace",
-  "'Georgia', serif",
-  "'Comic Sans MS', cursive",
-  "'Lucida Console', monospace",
-  "'Times New Roman', serif",
-  "'Trebuchet MS', sans-serif",
-  "'Impact', sans-serif",
-  "'Brush Script MT', cursive"
-];
+// Attendre que le DOM soit chargé
+document.addEventListener('DOMContentLoaded', function() {
+  // Éléments DOM
+  const menuToggle = document.getElementById('menuToggle');
+  const menuPanel = document.getElementById('menuPanel');
+  const menuClose = document.getElementById('menuClose');
+  const menuLinks = document.querySelectorAll('.menu-items a');
 
-const romy = document.getElementById("romy");
-let index = 0;
-let animationStarted = false;
+  // Animation d'entrée de la page
+  setTimeout(() => {
+    document.body.classList.add('loaded');
+  }, 500);
 
-function startFontAnimation() {
-  if (animationStarted) return; // empêche de lancer plusieurs fois
+  // Événements du menu
+  menuToggle.addEventListener('click', () => {
+    menuPanel.classList.add('active');
+  });
 
-  animationStarted = true;
+  menuClose.addEventListener('click', () => {
+    menuPanel.classList.remove('active');
+  });
 
-  setInterval(() => {
-    romy.style.fontFamily = fonts[index];
-    index = (index + 1) % fonts.length;
-  }, 100); // toutes les 0,1 sec
-}
+  menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      menuPanel.classList.remove('active');
+    });
+  });
 
-// Déclenche l’animation au premier scroll
-window.addEventListener("wheel", function onScroll() {
-  startFontAnimation();
-  window.removeEventListener("wheel", onScroll); // on l'enlève après le 1er déclenchement
+  // Animation du bouton d'entrée
+  const enterButton = document.querySelector('.enter-button');
+  if (enterButton) {
+    enterButton.addEventListener('mouseenter', () => {
+      enterButton.style.boxShadow = '0 5px 15px rgba(255, 255, 255, 0.1)';
+    });
+
+    enterButton.addEventListener('mouseleave', () => {
+      enterButton.style.boxShadow = 'none';
+    });
+
+    // Animation lors du clic
+    enterButton.addEventListener('click', (e) => {
+      // Optionnel: Animation de transition lors du clic avant la navigation
+      const event = e;
+
+      enterButton.style.opacity = '0';
+      enterButton.style.transform = 'scale(0.9)';
+
+      document.querySelector('.home-title').style.opacity = '0';
+      document.querySelector('.home-title').style.transform = 'translateY(-30px)';
+
+      // Légère pause avant la navigation pour voir l'animation
+      setTimeout(() => {
+        window.location.href = enterButton.getAttribute('href');
+      }, 300);
+
+      e.preventDefault();
+    });
+  }
 });

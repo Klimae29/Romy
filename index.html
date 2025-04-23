@@ -1,19 +1,49 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Romy</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/script-index.js" defer></script>
-    <script src="js/script-univers.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROMY - Réalisateur</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/fonts.css">
 </head>
-<body>
-    <div id="romy">Romy</div>
-    <div id="univ1">Univ1</div>
-    <div id="univ2">Univ2</div>
-    <div id="univ3">Univ3</div>
-    <div id="univ4">Univ4</div>
-    <div id="univ5">Univ5</div>
+<body class="home-page">
+  <!-- Menu de navigation -->
+  <button class="menu-toggle" id="menuToggle">Menu</button>
+
+  <div class="menu-panel" id="menuPanel">
+    <button class="menu-close" id="menuClose">Fermer</button>
+    <ul class="menu-items">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="projets.html#allianz">Allianz Travel</a></li>
+      <li><a href="projets.html#carrefour">Carrefour</a></li>
+      <li><a href="projets.html#craftsmen">To Craftsmen</a></li>
+      <li><a href="projets.html#bvlgari">Bvlgari</a></li>
+      <li><a href="projets.html#bordeaux">Les Vins de Bordeaux</a></li>
+    </ul>
+  </div>
+
+  <!-- Conteneur principal - Page d'accueil seulement -->
+  <main class="main-container">
+    <!-- Page d'accueil -->
+    <section class="section home active" id="home">
+      <h1 class="home-title">ROMY</h1>
+      <div class="home-enter">
+        <a href="projets.html" class="enter-button">Découvrir les projets</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts JavaScript -->
+  <script src="js/script-index.js"></script>
 </body>
 </html>

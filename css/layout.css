@@ -1,0 +1,217 @@
+/* layout.css - Fichier dédié à la disposition des éléments */
+
+/* Layout principal pour les projets */
+.project-container {
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  grid-template-areas: "title video description";
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  align-items: center;
+  padding: 0;
+}
+
+/* Conteneur de titre aligné à gauche */
+.project-title-container {
+  grid-area: title;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 10%;
+  padding-right: 5%;
+  height: 100%;
+}
+
+/* Titre */
+.project-title {
+  text-align: left;
+}
+
+/* Conteneur vidéo centré */
+.project-video-container {
+  grid-area: video;
+  width: 100%;
+  max-width: 800px; /* Largeur maximale de 800px comme demandé */
+  position: relative;
+  padding-top: 0; /* Enlever le padding-top précédent */
+  aspect-ratio: 16/9; /* Utiliser aspect-ratio pour garantir un ratio 16:9 */
+  margin: 0 auto; /* Centrer horizontalement */
+  justify-self: center; /* Pour centrer dans la grille */
+  height: auto; /* Hauteur automatique basée sur l'aspect-ratio */
+}
+
+/* Pour les navigateurs plus anciens qui ne supportent pas aspect-ratio */
+@supports not (aspect-ratio: 16/9) {
+  .project-video-container {
+    padding-top: 56.25%; /* 9/16 = 0.5625 ou 56.25% */
+    height: 0;
+  }
+}
+
+.project-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
+
+/* Conteneur de description aligné à droite */
+.project-description-container {
+  grid-area: description;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 5%;
+  padding-right: 10%;
+  height: 100%;
+}
+
+/* Description */
+.project-description {
+  text-align: left;
+}
+
+/* Adaptation mobile */
+@media (max-width: 992px) {
+  .project-container {
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "title"
+      "video"
+      "description";
+    gap: 20px;
+    align-content: center;
+    padding: 0 5%;
+  }
+
+  .project-title-container {
+    padding: 0;
+    text-align: center;
+  }
+
+  .project-title {
+    text-align: center;
+  }
+
+  .project-description-container {
+    padding: 0;
+    text-align: center;
+  }
+
+  .project-description {
+    text-align: center;
+  }
+
+  .project-video-container {
+    width: 100%;
+    padding-top: 56.25%; /* Retour au ratio 16:9 standard */
+  }
+}
+
+/* Orientation paysage sur petit écran */
+@media (max-height: 600px) and (orientation: landscape) {
+  .project-container {
+    grid-template-columns: 25% 50% 25%;
+    grid-template-areas: "title video description";
+    align-items: center;
+  }
+
+  .project-video-container {
+    padding-top: 28.125%; /* 16:9 ratio pour 50% de largeur */
+  }
+
+  .project-title-container,
+  .project-description-container {
+    text-align: left;
+  }
+}
+
+/* Styles pour le lecteur vidéo minimaliste */
+.minimal-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.minimal-player video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.minimal-player .controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.minimal-player:hover .controls {
+  opacity: 1;
+}
+
+.progress-container {
+  flex: 1;
+  margin-right: 15px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 1.5px;
+  position: relative;
+  cursor: pointer;
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background-color: #fff;
+  border-radius: 1.5px;
+}
+
+.control-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.mute-button, .fullscreen-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  padding: 0;
+  margin-left: 12px;
+  outline: none;
+}
+
+.mute-button:hover, .fullscreen-button:hover {
+  opacity: 1;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  fill: white;
+}
