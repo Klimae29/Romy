@@ -307,3 +307,32 @@ body {
   color: black;
   opacity: 0.9;
 }
+
+/* Amélioration de la transition entre sections */
+.section {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease, visibility 0s linear 1s;
+  will-change: opacity, visibility;
+}
+
+.section.active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1s ease, visibility 0s linear;
+}
+
+/* Amélioration de la transition de couleur de fond */
+body {
+  transition: background-color 1s ease;
+  will-change: background-color;
+}
+
+/* Style pour l'état initial de chargement du site */
+body:not(.loaded) .section {
+  opacity: 0;
+}
+
+body.loaded .section.active {
+  opacity: 1;
+}

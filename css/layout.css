@@ -215,3 +215,24 @@
   height: 16px;
   fill: white;
 }
+
+.minimal-player .controls {
+  padding: 10px 15px;
+  height: auto;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+}
+
+.progress-bar {
+  height: 4px;
+  border-radius: 2px;
+}
+
+.progress {
+  height: 100%;
+  transition: width 0.1s linear;
+  will-change: width;
+}
+
+.control-buttons {
+  margin-top: 5px;
+}
