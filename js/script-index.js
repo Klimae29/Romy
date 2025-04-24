@@ -3,11 +3,13 @@ document.fonts.ready.then(() => {
   console.log("✅ Toutes les polices Google Fonts sont chargées !");
 });
 
+
+
 const pairs = [
-  { font: "'Anton', sans-serif", image: "index_univ_1.png" },
-  { font: "'Orbitron', sans-serif", image: "index_univ_2.png" },
-  { font: "'Amatic SC', cursive", image: "index_univ_3.png" },
-  { font: "'Comic Sans MS', cursive", image: "index_univ_4.png" },
+  { font: "'Comic Sans MS', cursive", image: "index_univ_1.png" },
+  { font: "'Amatic SC', cursive", image: "index_univ_2.png" },
+  { font: "'Anton', sans-serif", image: "index_univ_3.png" },
+  { font: "'Orbitron', sans-serif", image: "index_univ_4.png" },
   { font: "'Lucida Console', monospace", image: "index_univ_5.png" },
   { font: "'Pacifico', cursive", image: "index_univ_6.png" },
   { font: "'Trebuchet MS', sans-serif", image: "index_univ_7.png" },
@@ -22,9 +24,11 @@ pairs.forEach(({ image }) => {
 });
 
 const romy = document.getElementById("romy");
-let index = 0;
-let toggle = true;
+let index = 1; // on commence à 1, car l’index 0 est déjà affiché
+let toggle = false;
 let animationStarted = false;
+
+
 
 // Création des 2 calques background
 const bg1 = document.createElement("div");
@@ -47,15 +51,17 @@ const bg2 = document.createElement("div");
   document.body.appendChild(bg);
 });
 
-bg1.style.opacity = 1; // Pour afficher la première image au départ
+// 🎯 AFFICHER la première image + première police
+romy.style.fontFamily = pairs[0].font;
+bg1.style.backgroundImage = `url(../assets/images/${pairs[0].image})`;
+bg1.style.opacity = 1;
+romy.classList.add("appear");
 
 function changeBackgroundAndFont() {
   const current = pairs[index];
 
-  // Change la police
   romy.style.fontFamily = current.font;
 
-  // Change l'image de fond
   const currentBg = toggle ? bg1 : bg2;
   const nextBg = toggle ? bg2 : bg1;
 
@@ -71,11 +77,10 @@ function startAnimation() {
   if (animationStarted) return;
   animationStarted = true;
 
-  changeBackgroundAndFont(); // Premier changement immédiat
-  setInterval(changeBackgroundAndFont, 200);
+  setInterval(changeBackgroundAndFont, 100);
 }
 
-// Déclenchement au 1er scroll
+// Lancer l'animation au 1er scroll
 window.addEventListener("wheel", function onScroll() {
   startAnimation();
   window.removeEventListener("wheel", onScroll);
