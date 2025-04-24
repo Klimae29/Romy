@@ -63,6 +63,243 @@ const Utils = {
   }
 };
 
+// Module pour l'animation de la page d'accueil
+
+// Module pour l'animation de la page d'accueil
+const HomeAnimator = {
+  // Configuration
+  pairs: [
+    { font: "'Comic Sans MS', cursive", image: "index_univ_1.png" },
+    { font: "'Amatic SC', cursive", image: "index_univ_2.png" },
+    { font: "'Anton', sans-serif", image: "index_univ_3.png" },
+    { font: "'Orbitron', sans-serif", image: "index_univ_4.png" },
+    { font: "'Lucida Console', monospace", image: "index_univ_5.png" },
+    { font: "'Pacifico', cursive", image: "index_univ_6.png" },
+    { font: "'Trebuchet MS', sans-serif", image: "index_univ_7.png" },
+    { font: "'Impact', sans-serif", image: "index_univ_8.png" },
+    { font: "'Brush Script MT', cursive", image: "index_univ_9.png" }
+  ],
+
+  // État
+  state: {
+    index: 0,
+    toggle: false,
+    animationStarted: false,
+    animationInterval: null
+  },
+
+  // Initialisation
+  init() {
+    // Utiliser querySelector au lieu de getElementById pour être sûr
+    this.romyTitle = document.querySelector('#romy');
+
+    // Vérifier si l'élément a été trouvé
+    if (!this.romyTitle) {
+      console.error("ERREUR: L'élément #romy n'a pas été trouvé!");
+      // Tentative alternative de sélection
+      this.romyTitle = document.querySelector('.home-title');
+      console.log("Tentative alternative:", this.romyTitle);
+    }
+
+    this.bg1 = document.querySelector('#bg1') || this.createBackgroundLayer('bg1');
+    this.bg2 = document.querySelector('#bg2') || this.createBackgroundLayer('bg2');
+
+    // Supprimer toute classe ou style qui pourrait interférer
+    if (this.romyTitle) {
+      // Supprimer les transitions et styles potentiellement conflictuels
+      this.romyTitle.style.transition = "none";
+      this.romyTitle.style.willChange = "font-family";
+
+      // S'assurer que !important dans le CSS ne bloque pas nos changements
+      this.romyTitle.setAttribute('style', 'transition: none !important; will-change: font-family !important;');
+    }
+
+    // Préchargement des images
+    this.preloadImages();
+
+    // Initialiser l'affichage
+    this.setupInitialDisplay();
+
+    // Configurer les gestionnaires d'événements
+    this.setupEventListeners();
+
+    console.log("✅ Animation de la page d'accueil initialisée !");
+  },
+
+  // Créer un calque d'arrière-plan si nécessaire
+  createBackgroundLayer(id) {
+    const bg = document.createElement('div');
+    bg.id = id;
+    bg.classList.add('bg-layer');
+
+    Object.assign(bg.style, {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      transition: "opacity 0.8s ease",
+      zIndex: -1,
+      opacity: 0,
+    });
+
+    document.body.appendChild(bg);
+    return bg;
+  },
+
+  // Précharger les images
+  preloadImages() {
+    this.pairs.forEach(({ image }) => {
+      const img = new Image();
+      img.src = `../assets/images/${image}`;
+    });
+  },
+
+  // Configurer l'affichage initial
+  setupInitialDisplay() {
+    // Première police et image
+    if (this.romyTitle) {
+      this.romyTitle.style.fontFamily = this.pairs[0].font;
+    }
+    if (this.bg1) {
+      this.bg1.style.backgroundImage = `url(../assets/images/${this.pairs[0].image})`;
+      this.bg1.style.opacity = 1;
+    }
+    if (this.romyTitle) {
+      this.romyTitle.classList.add("appear");
+    }
+  },
+
+  // Configurer les gestionnaires d'événements
+  setupEventListeners() {
+    // Démarrer l'animation au premier scroll
+    window.addEventListener("wheel", () => {
+      this.startAnimation();
+    }, { once: true });
+
+    // Également démarrer l'animation sur click pour mobile
+    if (this.romyTitle) {
+      this.romyTitle.addEventListener('click', () => {
+        this.startAnimation();
+      });
+    }
+
+    // Ajouter un gestionnaire pour le bouton qui permet de démarrer manuellement
+    const startButton = document.getElementById('startAnimation');
+    if (startButton) {
+      startButton.addEventListener('click', () => {
+        this.startAnimation();
+      });
+    }
+  },
+
+  // Technique de force-redraw pour s'assurer que le changement de police est visible
+  forceRedraw(element) {
+    // Ces opérations forcent le navigateur à redessiner l'élément
+    const display = element.style.display;
+    element.style.display = 'none';
+    void element.offsetHeight; // Force un reflow
+    element.style.display = display;
+  },
+
+  // Créer un élément temporaire avec le texte pour précharger la police
+  preloadFont(fontFamily, text) {
+    const preloader = document.createElement('div');
+    preloader.style.fontFamily = fontFamily;
+    preloader.style.position = 'absolute';
+    preloader.style.left = '-9999px';
+    preloader.style.visibility = 'hidden';
+    preloader.textContent = text || 'ROMY';
+    document.body.appendChild(preloader);
+
+    // Supprimer après un court délai
+    setTimeout(() => {
+      document.body.removeChild(preloader);
+    }, 100);
+  },
+
+  // Changer la police et l'arrière-plan
+  changeBackgroundAndFont() {
+    if (!this.romyTitle) return;
+
+    const current = this.pairs[this.state.index];
+
+    // Précharger la police pour s'assurer qu'elle est disponible
+    this.preloadFont(current.font);
+
+    // Technique 1: Changement direct avec forceRedraw
+    this.romyTitle.style.fontFamily = current.font;
+    this.forceRedraw(this.romyTitle);
+
+    // Technique 2: Animation Flash pour rendre le changement plus visible
+    this.romyTitle.classList.add('font-changing');
+    setTimeout(() => {
+      this.romyTitle.classList.remove('font-changing');
+    }, 50);
+
+    // Technique 3: Changer le contenu temporairement pour forcer un redraw
+    const originalText = this.romyTitle.textContent;
+    this.romyTitle.textContent = originalText + ' ';
+    setTimeout(() => {
+      this.romyTitle.textContent = originalText;
+    }, 10);
+
+    // Changer l'arrière-plan (garder cette partie identique)
+    const currentBg = this.state.toggle ? this.bg1 : this.bg2;
+    const nextBg = this.state.toggle ? this.bg2 : this.bg1;
+
+    if (nextBg && current.image) {
+      nextBg.style.backgroundImage = `url(../assets/images/${current.image})`;
+      nextBg.style.opacity = 1;
+    }
+
+    if (currentBg) {
+      currentBg.style.opacity = 0;
+    }
+
+    // Mettre à jour l'index pour le prochain changement
+    this.state.toggle = !this.state.toggle;
+    this.state.index = (this.state.index + 1) % this.pairs.length;
+
+    // Log pour debug
+    console.log(`Police changée pour: ${current.font}`);
+  },
+
+  // Démarrer l'animation
+  startAnimation() {
+    if (this.state.animationStarted) return;
+
+    console.log("Démarrage de l'animation...");
+
+    // Forcer la suppression de tout attribut !important qui pourrait interférer
+    if (this.romyTitle) {
+      this.romyTitle.setAttribute('style', 'transition: none !important; will-change: font-family !important;');
+    }
+
+    this.state.animationStarted = true;
+
+    // Utiliser un intervalle plus court (50ms) pour un changement plus rapide
+    this.state.animationInterval = setInterval(() => {
+      this.changeBackgroundAndFont();
+    }, 50); // Intervalle très court pour des changements rapides
+
+    console.log("✅ Animation de la page d'accueil démarrée !");
+  },
+
+  // Arrêter l'animation
+  stopAnimation() {
+    if (this.state.animationInterval) {
+      clearInterval(this.state.animationInterval);
+      this.state.animationInterval = null;
+    }
+    this.state.animationStarted = false;
+    console.log("Animation arrêtée.");
+  }
+}; // ACCOLADE FERMANTE MANQUANTE AJOUTÉE
+
 // Module de navigation entre sections
 const SectionNavigator = {
   // Configuration
@@ -131,6 +368,11 @@ const SectionNavigator = {
   navigateTo(sectionId) {
     this.sections.forEach((section, index) => {
       if (section.id === sectionId) {
+        // Si nous quittons la section d'accueil, arrêter l'animation
+        if (this.state.currentIndex === 0 && index !== 0 && HomeAnimator) {
+          HomeAnimator.stopAnimation();
+        }
+
         // Mettre à jour les classes
         this.sections.forEach(s => s.classList.remove('active'));
         section.classList.add('active');
@@ -155,6 +397,11 @@ const SectionNavigator = {
 
     const newIndex = this.state.currentIndex + direction;
     if (newIndex < 0 || newIndex >= this.sections.length) return;
+
+    // Si nous quittons la section d'accueil, arrêter l'animation
+    if (this.state.currentIndex === 0 && newIndex !== 0 && HomeAnimator) {
+      HomeAnimator.stopAnimation();
+    }
 
     this.state.isScrolling = true;
     this.state.currentIndex = newIndex;
@@ -211,6 +458,12 @@ const SectionNavigator = {
     e.preventDefault();
     if (this.state.isScrolling) return;
 
+    // Si nous sommes sur la page d'accueil et que l'animation n'a pas encore commencé
+    if (this.state.currentIndex === 0 && HomeAnimator && !HomeAnimator.state.animationStarted) {
+      HomeAnimator.startAnimation();
+      return;
+    }
+
     clearTimeout(this.state.wheelTimeout);
     this.state.wheelTimeout = setTimeout(() => {
       if (e.deltaY > 0) {
@@ -239,6 +492,12 @@ const SectionNavigator = {
 
       const touchEndY = e.changedTouches[0].screenY;
       const diff = this.state.touchStartY - touchEndY;
+
+      // Si nous sommes sur la page d'accueil et que l'animation n'a pas encore commencé
+      if (this.state.currentIndex === 0 && HomeAnimator && !HomeAnimator.state.animationStarted) {
+        HomeAnimator.startAnimation();
+        return;
+      }
 
       if (Math.abs(diff) > 50) {
         if (diff > 0) {
@@ -521,29 +780,6 @@ const MenuController = {
   }
 };
 
-// Initialisation au chargement du DOM
-
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialiser les contrôleurs
-  SectionNavigator.init();
-  VideoPlayer.init();
-  MenuController.init();
-
- // Ajouter cette ligne:
-  TransitionController.init();
-
-  // Animation de chargement initial
-  setTimeout(() => {
-    document.body.classList.add('loaded');
-  }, 500);
-});
-
-
-// Gestion de redimensionnement avec debounce
-window.addEventListener('resize', Utils.debounce(() => {
-  // Code de gestion du redimensionnement si nécessaire
-}, 250));
-
 // Module de transition amélioré
 const TransitionController = {
   // Configuration
@@ -650,3 +886,33 @@ const TransitionController = {
     document.dispatchEvent(event);
   }
 };
+
+// Initialisation au chargement du DOM
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("✅ Script JS chargé !");
+
+  // Attendre que les polices soient chargées
+  document.fonts.ready.then(() => {
+    console.log("✅ Toutes les polices Google Fonts sont chargées !");
+
+    // Initialiser les contrôleurs
+    if (Utils.select('#romy')) {
+      HomeAnimator.init();
+    }
+
+    SectionNavigator.init();
+    VideoPlayer.init();
+    MenuController.init();
+    TransitionController.init();
+
+    // Animation de chargement initial
+    setTimeout(() => {
+      document.body.classList.add('loaded');
+    }, 500);
+  });
+});
+
+// Gestion de redimensionnement avec debounce
+window.addEventListener('resize', Utils.debounce(() => {
+  // Code de gestion du redimensionnement si nécessaire
+}, 250));

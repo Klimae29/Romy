@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ROMY - Projets</title>
+  <title>ROMY - Réalisateur</title>
 
   <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Anton&family=Orbitron&family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- Styles CSS -->
   <link rel="stylesheet" href="css/style.css">
@@ -17,27 +20,70 @@
   <link rel="stylesheet" href="css/responsive.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/menu-button.css">
 </head>
-<body class="projects-page">
+<body class="combined-page">
   <!-- Menu de navigation -->
   <button class="menu-toggle" id="menuToggle">Menu</button>
 
   <div class="menu-panel" id="menuPanel">
     <button class="menu-close" id="menuClose">Fermer</button>
     <ul class="menu-items">
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="#allianz">Allianz Travel</a></li>
-      <li><a href="#carrefour">Carrefour</a></li>
-      <li><a href="#craftsmen">To Craftsmen</a></li>
-      <li><a href="#bvlgari">Bvlgari</a></li>
-      <li><a href="#bordeaux">Les Vins de Bordeaux</a></li>
+      <li><a href="#home" class="nav-link">Accueil</a></li>
+      <li><a href="#allianz" class="nav-link">Allianz Travel</a></li>
+      <li><a href="#carrefour" class="nav-link">Carrefour</a></li>
+      <li><a href="#craftsmen" class="nav-link">To Craftsmen</a></li>
+      <li><a href="#bvlgari" class="nav-link">Bvlgari</a></li>
+      <li><a href="#bordeaux" class="nav-link">Les Vins de Bordeaux</a></li>
     </ul>
   </div>
 
-  <!-- Conteneur principal avec sections de projet -->
+  <!-- Conteneur principal avec toutes les sections -->
   <main class="main-container">
+
+    <!-- Nouvelle page d'accueil inspirée de index.html -->
+    <section class="section home active" id="home">
+      <div class="container">
+        <div id="bg1" class="bg-layer"></div>
+        <div id="bg2" class="bg-layer"></div>
+
+        <!-- Ajout d'un div pour contenir le titre et faciliter l'animation -->
+        <div class="title-container">
+          <h1 class="home-title" id="romy">ROMY</h1>
+        </div>
+
+        <!-- Préchargeur de polices (invisible) -->
+        <div class="font-preloader">
+          <span style="font-family: 'Comic Sans MS', cursive">ROMY</span>
+          <span style="font-family: 'Amatic SC', cursive">ROMY</span>
+          <span style="font-family: 'Anton', sans-serif">ROMY</span>
+          <span style="font-family: 'Orbitron', sans-serif">ROMY</span>
+          <span style="font-family: 'Lucida Console', monospace">ROMY</span>
+          <span style="font-family: 'Pacifico', cursive">ROMY</span>
+          <span style="font-family: 'Trebuchet MS', sans-serif">ROMY</span>
+          <span style="font-family: 'Impact', sans-serif">ROMY</span>
+          <span style="font-family: 'Brush Script MT', cursive">ROMY</span>
+        </div>
+
+        <!-- Flèche en bas à droite -->
+        <div class="arrow-container-down">
+          <i class="fa-solid fa-arrow-down"></i>
+        </div>
+
+        <!-- Menu de navigation petites barres -->
+        <ul class="ligne-container">
+          <li class="ligne"></li>
+          <li class="ligne"></li>
+          <li class="ligne"></li>
+          <li class="ligne"></li>
+          <li class="ligne"></li>
+          <li class="ligne"></li>
+        </ul>
+      </div>
+    </section>
+
     <!-- Allianz Travel -->
-    <section class="section active" id="allianz" data-bg-color="#1a3b5c">
+    <section class="section project-section" id="allianz" data-bg-color="#1a3b5c">
       <div class="project-container">
         <div class="project-title-container">
           <h2 class="project-title">Allianz Travel</h2>
@@ -86,7 +132,7 @@
     </section>
 
     <!-- Carrefour -->
-    <section class="section" id="carrefour" data-bg-color="#7a1f1d">
+    <section class="section project-section" id="carrefour" data-bg-color="#7a1f1d">
       <div class="project-container">
         <div class="project-title-container">
           <h2 class="project-title">Carrefour - Le goût des autres</h2>
@@ -135,7 +181,7 @@
     </section>
 
     <!-- To Craftsmen -->
-    <section class="section" id="craftsmen" data-bg-color="#1d5e4c">
+    <section class="section project-section" id="craftsmen" data-bg-color="#1d5e4c">
       <div class="project-container">
         <div class="project-title-container">
           <h2 class="project-title">To Craftsmen</h2>
@@ -184,7 +230,7 @@
     </section>
 
     <!-- Bvlgari -->
-    <section class="section" id="bvlgari" data-bg-color="#4c3b5c">
+    <section class="section project-section" id="bvlgari" data-bg-color="#4c3b5c">
       <div class="project-container">
         <div class="project-title-container">
           <h2 class="project-title">Bvlgari - 30 Av. George V</h2>
@@ -233,7 +279,7 @@
     </section>
 
     <!-- Les vins de Bordeaux -->
-    <section class="section" id="bordeaux" data-bg-color="#541f21">
+    <section class="section project-section" id="bordeaux" data-bg-color="#541f21">
       <div class="project-container">
         <div class="project-title-container">
           <h2 class="project-title">Les Vins de Bordeaux</h2>
@@ -273,7 +319,9 @@
         </div>
         <div class="project-description-container">
           <p class="project-description">
-            Descriptif en attente
+            Douze portraits, douze voix du vin, chacune portant une vision singulière de Bordeaux et de ses terroirs.
+            Fiers, emblématiques, ces femmes et ces hommes incarnent leur région, leur métier, leur passion.
+            Un film libre, vivant, à l’image d’une génération qui réinvente son héritage.
           </p>
         </div>
       </div>
@@ -283,10 +331,12 @@
   <div class="scroll-indicator">Défilez pour découvrir</div>
 
   <!-- Bouton retour à l'accueil -->
-  <a href="index.html" class="home-button">Accueil</a>
+  <a href="#home" class="home-button" id="homeButton">Accueil</a>
 
   <!-- Scripts JavaScript -->
+  <script src="js/font-preloader.js"></script>
   <script src="js/romy.js"></script>
   <script src="js/animations.js"></script>
+
 </body>
 </html>
