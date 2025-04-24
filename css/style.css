@@ -280,6 +280,7 @@ body {
   text-shadow: 0 0 2px white, 0 0 4px white;
   opacity: 0;
   transition: all 2s ease;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 #romy.appear {
@@ -287,26 +288,7 @@ body {
   transform: translate(-50%, -50%) translateX(0);
 }
 
-.arrow-container-down {
-  width: 60px;
-  height: 60px;
-  position: absolute;
-  bottom: 30px;
-  right: 40px;
-  opacity: 0.5;
-  border: 5px solid black;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
 
-.arrow-container-down i {
-  font-size: 24px;
-  color: black;
-  opacity: 0.9;
-}
 
 /* Amélioration de la transition entre sections */
 .section {
@@ -335,4 +317,58 @@ body:not(.loaded) .section {
 
 body.loaded .section.active {
   opacity: 1;
+}
+
+.mouse-wheel {
+  display: block;
+  position: absolute;
+  bottom: 30px;
+  left:50%;
+  width: 30px;
+  height: 50px;
+  border: 2px solid #fff;
+  border-radius: 15px;
+}
+
+.wheel {
+  display: block;
+  margin: 0 0 0 -2px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  animation: scroll-wheel 1.8s linear 0s infinite normal none;
+  will-change: transform;
+}
+
+.mouse-wheel:hover {
+  transform: scale(1.2);
+  transition: transform 0.5s ease-in-out;
+}
+.mouse-wheel:not(:hover) {
+  transform: scale(1);
+  transition: transform 0.5s ease-in-out;
+}
+
+@keyframes scroll-wheel {
+  0% {
+    opacity: 0; /* Commence invisible */
+    transform: translateY(0); /* Position initiale */
+  }
+  20% {
+    opacity: 1; /* Apparition rapide en 0,2s */
+  }
+  60% {
+    transform: translateY(13px); /* Défilement normal */
+  }
+  80% {
+    opacity: 0; /* Estompe l'élément */
+  }
+  100% {
+    opacity: 0; /* Complète l'estompage */
+    transform: translateY(13px); /* Reste à la dernière position avant le reset */
+  }
 }
