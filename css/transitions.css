@@ -1,0 +1,137 @@
+/**
+ * transitions.css - Gestion optimisée des transitions entre sections
+ */
+
+/* Variables pour la cohérence des transitions */
+:root {
+  --transition-duration: 0.8s;
+  --transition-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --fade-out-duration: 0.6s;
+  --section-delay: 0.15s;
+}
+
+/* Transition globale de section */
+.section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  will-change: opacity, visibility, transform;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-duration) var(--transition-easing),
+    visibility 0s linear var(--transition-duration);
+}
+
+.section.active {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--transition-duration) var(--transition-easing),
+    visibility 0s linear;
+}
+
+/* Transition de sortie spécifique pour les sections qui quittent l'écran */
+.section.leaving {
+  opacity: 0;
+  transition:
+    opacity var(--fade-out-duration) var(--transition-easing);
+}
+
+/* Améliorations des transitions d'éléments */
+.section .project-title-container,
+.section .project-video-container,
+.section .project-description-container {
+  transition-property: opacity, transform;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-easing);
+  will-change: opacity, transform;
+}
+
+/* État initial pour les sections qui ne sont pas encore visibles */
+body.animations-ready .section:not(.active) .project-title-container {
+  opacity: 0;
+  transform: translateX(-60px);
+}
+
+body.animations-ready .section:not(.active) .project-video-container {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+body.animations-ready .section:not(.active) .project-description-container {
+  opacity: 0;
+}
+
+body.animations-ready .section:not(.active) .project-description-line {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Transition de sortie - comportement spécifique à chaque élément */
+.section.leaving .project-title-container {
+  opacity: 0 !important;
+  transform: translateX(0) !important; /* Pas de déplacement lors de la disparition */
+  transition-delay: 0s !important;
+  transition-property: opacity !important; /* Uniquement le fondu */
+}
+
+.section.leaving .project-video-container {
+  opacity: 0 !important;
+  transform: translateY(60px) !important; /* Disparaît vers le bas (inchangé) */
+  transition-delay: 0s !important;
+}
+
+.section.leaving .project-description-container {
+  opacity: 0 !important;
+  transform: translateY(0) !important; /* Pas de déplacement lors de la disparition */
+  transition-delay: 0s !important;
+  transition-property: opacity !important; /* Uniquement le fondu */
+}
+
+/* Optimisation de la transition de couleur de fond */
+body {
+  transition: background-color 1.2s ease;
+  will-change: background-color;
+}
+
+/* Gestion des animations pendant le chargement initial */
+body:not(.loaded) .section {
+  opacity: 0;
+}
+
+body.loaded .section.active {
+  opacity: 1;
+}
+
+/* Optimisations de performance */
+.project-title-container,
+.project-video-container,
+.project-description-container,
+.project-description-line {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Force l'utilisation de l'accélération GPU sur les éléments en mouvement */
+.section,
+.project-title-container,
+.project-video-container,
+.project-description-container,
+.project-description-line {
+  transform: translateZ(0);
+}
+
+/* Transition spéciale pour les lignes de description (apparition échelonnée) */
+@media (prefers-reduced-motion: no-preference) {
+  .section.active .project-description-line {
+    opacity: 1;
+    transform: translateY(0);
+    transition-property: opacity, transform;
+    transition-duration: var(--transition-duration);
+    transition-timing-function: var(--transition-easing);
+  }
+}
