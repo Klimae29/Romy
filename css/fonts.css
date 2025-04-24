@@ -1,0 +1,48 @@
+/* fonts.css - Gestion des polices pour le site ROMY */
+
+/* Assurons-nous que tous les titres sont en Playfair */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Spécifiquement pour les titres de projets */
+.project-title {
+  font-family: 'Playfair Display', serif !important;
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* Renforcement pour les titres dans les containers */
+.project-title-container h2,
+.section h2.project-title {
+  font-family: 'Playfair Display', serif !important;
+}
+
+/* Style du titre d'accueil */
+.home-title {
+  font-family: 'Playfair Display', serif !important;
+  font-size: 120px;
+  font-weight: 400;
+  letter-spacing: 15px;
+}
+
+/* Menu items en Playfair */
+.menu-items a {
+  font-family: 'Playfair Display', serif !important;
+}
+
+/* Pour tous les autres textes en Poppins */
+p, span, button, a:not(.menu-items a), div, .project-description {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+
+/* Assurons-nous que les boutons et éléments d'interface sont en Poppins */
+.menu-toggle,
+.menu-close,
+.enter-button,
+.home-button,
+.scroll-indicator {
+  font-family: 'Poppins', sans-serif !important;
+}

@@ -1,4 +1,252 @@
+/* style.css - Styles de base pour le site ROMY */
+
+/* Reset et styles de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #fff;
+  overflow: hidden;
+  height: 100vh;
+  background-color: #000;
+  transition: background-color 1.5s ease;
+  font-weight: 300;
+}
+
+/* Navigation */
+.menu-toggle {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 100;
+  padding: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: opacity 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+.menu-toggle:hover {
+  opacity: 0.7;
+}
+
+.menu-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100%;
+  max-width: 400px;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 99;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-panel.active {
+  transform: translateX(0);
+}
+
+.menu-close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+.menu-items {
+  list-style: none;
+  text-align: left;
+  padding: 0 20px;
+}
+
+.menu-items li {
+  margin: 20px 0;
+}
+
+.menu-items a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease;
+  font-family: 'Playfair Display', serif;
+}
+
+.menu-items a:hover {
+  transform: translateX(10px);
+}
+
+.menu-items a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #fff;
+  transition: width 0.3s ease;
+}
+
+.menu-items a:hover::after {
+  width: 100%;
+}
+
+/* Sections principales */
+.main-container {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.section {
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+  padding: 0;
+}
+
+.section.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Page d'accueil */
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.home-title {
+  font-size: 120px;
+  font-weight: 400;
+  letter-spacing: 15px;
+  font-family: 'Playfair Display', serif;
+}
+
+/* Tailles et styles généraux */
+.project-title {
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 1.2;
+  font-family: 'Playfair Display', serif;
+}
+
+.project-description {
+  font-size: 16px;
+  line-height: 1.8;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+
+/* Indicateur de défilement */
+.scroll-indicator {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+
+/* Styles spécifiques à la page d'accueil */
+.home-page {
+  background-color: #000;
+}
+
+.home-enter {
+  margin-top: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: 1s;
+}
+
+.home.active .home-enter {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.enter-button {
+  display: inline-block;
+  padding: 12px 24px;
+  border: 1px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+
+.enter-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+}
+
+/* Styles spécifiques à la page des projets */
+.projects-page {
+  transition: background-color 1.5s ease;
+}
+
+.home-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  z-index: 10;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+
+.home-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
   margin: 0;
   overflow: hidden;
 }

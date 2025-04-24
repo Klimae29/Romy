@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROMY - Projets</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/fonts.css">
+</head>
+<body class="projects-page">
+  <!-- Menu de navigation -->
+  <button class="menu-toggle" id="menuToggle">Menu</button>
+
+  <div class="menu-panel" id="menuPanel">
+    <button class="menu-close" id="menuClose">Fermer</button>
+    <ul class="menu-items">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="#allianz">Allianz Travel</a></li>
+      <li><a href="#carrefour">Carrefour</a></li>
+      <li><a href="#craftsmen">To Craftsmen</a></li>
+      <li><a href="#bvlgari">Bvlgari</a></li>
+      <li><a href="#bordeaux">Les Vins de Bordeaux</a></li>
+    </ul>
+  </div>
+
+  <!-- Conteneur principal avec sections de projet -->
+  <main class="main-container">
+    <!-- Allianz Travel -->
+    <section class="section active" id="allianz" data-bg-color="#1a3b5c">
+      <div class="project-container">
+        <div class="project-title-container">
+          <h2 class="project-title">Allianz Travel</h2>
+        </div>
+        <div class="project-video-container">
+          <div class="minimal-player">
+            <video poster="/api/placeholder/1280/720">
+              <source src="assets/videos/allianz.mp4" type="video/mp4">
+              Votre navigateur ne supporte pas la vidéo HTML5.
+            </video>
+            <div class="controls">
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div class="progress"></div>
+                </div>
+              </div>
+              <div class="control-buttons">
+                <button class="mute-button" aria-label="Mute">
+                  <svg class="icon volume-on" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                  </svg>
+                  <svg class="icon volume-off" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm-5.5 6.01l-2.28-2.28-2.43 2.43H3V9.84h1.61l6.13 6.13zm2.96-2.36c.4-.4.72-.89.93-1.43l-2.01-2.01c.06.94-.23 1.77-.73 2.45l1.81.99zm-7.85-9.82l-1.11 1.11 3.01 3.01 2.49-2.49-1.89-1.89c-.68.38-1.28.88-1.77 1.48l-.73-.73z"/>
+                  </svg>
+                </button>
+                <button class="fullscreen-button" aria-label="Full Screen">
+                  <svg class="icon fullscreen-enter" viewBox="0 0 24 24">
+                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                  </svg>
+                  <svg class="icon fullscreen-exit" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-description-container">
+          <p class="project-description">
+            Un jeune couple déambule dans un hôtel désert, terrain luxueux pour leurs jeux d'enfants.
+            Ils se cherchent, se défient, rient, dansent — la séduction flotte dans chaque regard.
+            Un écrin de beauté et d'insouciance, au cœur de la ville des amoureux.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Les vins de Bordeaux -->
+    <section class="section" id="bordeaux" data-bg-color="#541f21">
+      <div class="project-container">
+        <div class="project-title-container">
+          <h2 class="project-title">Les Vins de Bordeaux</h2>
+        </div>
+        <div class="project-video-container">
+          <div class="minimal-player">
+            <video poster="/api/placeholder/1280/720">
+              <source src="assets/videos/bordeaux.mp4" type="video/mp4">
+              Votre navigateur ne supporte pas la vidéo HTML5.
+            </video>
+            <div class="controls">
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div class="progress"></div>
+                </div>
+              </div>
+              <div class="control-buttons">
+                <button class="mute-button" aria-label="Mute">
+                  <svg class="icon volume-on" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                  </svg>
+                  <svg class="icon volume-off" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm-5.5 6.01l-2.28-2.28-2.43 2.43H3V9.84h1.61l6.13 6.13zm2.96-2.36c.4-.4.72-.89.93-1.43l-2.01-2.01c.06.94-.23 1.77-.73 2.45l1.81.99zm-7.85-9.82l-1.11 1.11 3.01 3.01 2.49-2.49-1.89-1.89c-.68.38-1.28.88-1.77 1.48l-.73-.73z"/>
+                  </svg>
+                </button>
+                <button class="fullscreen-button" aria-label="Full Screen">
+                  <svg class="icon fullscreen-enter" viewBox="0 0 24 24">
+                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                  </svg>
+                  <svg class="icon fullscreen-exit" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-description-container">
+          <p class="project-description">
+            Descriptif en attente
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="scroll-indicator">Défilez pour découvrir</div>
+
+  <!-- Bouton retour à l'accueil -->
+  <a href="index.html" class="home-button">Accueil</a>
+
+  <!-- Scripts JavaScript -->
+  <script src="js/main.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
+                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                  </svg>
+                  <svg class="icon fullscreen-exit" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-description-container">
+          <p class="project-description">
+            Un film en tableaux où chaque personnage révèle une facette inattendue de lui-même.
+            En voyage, on improvise, on vit intensément, on prend des risques sans le savoir.
+            Le film parle à nos "futurs nous", ceux qu'on ne connaît pas encore mais qu'on pourrait bien croiser au détour d'un voyage.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Carrefour -->
+    <section class="section" id="carrefour" data-bg-color="#7a1f1d">
+      <div class="project-container">
+        <div class="project-title-container">
+          <h2 class="project-title">Carrefour - Le goût des autres</h2>
+        </div>
+        <div class="project-video-container">
+          <div class="minimal-player">
+            <video poster="/api/placeholder/1280/720">
+              <source src="assets/videos/carrefour.mp4" type="video/mp4">
+              Votre navigateur ne supporte pas la vidéo HTML5.
+            </video>
+            <div class="controls">
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div class="progress"></div>
+                </div>
+              </div>
+              <div class="control-buttons">
+                <button class="mute-button" aria-label="Mute">
+                  <svg class="icon volume-on" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                  </svg>
+                  <svg class="icon volume-off" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm-5.5 6.01l-2.28-2.28-2.43 2.43H3V9.84h1.61l6.13 6.13zm2.96-2.36c.4-.4.72-.89.93-1.43l-2.01-2.01c.06.94-.23 1.77-.73 2.45l1.81.99zm-7.85-9.82l-1.11 1.11 3.01 3.01 2.49-2.49-1.89-1.89c-.68.38-1.28.88-1.77 1.48l-.73-.73z"/>
+                  </svg>
+                </button>
+                <button class="fullscreen-button" aria-label="Full Screen">
+                  <svg class="icon fullscreen-enter" viewBox="0 0 24 24">
+                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                  </svg>
+                  <svg class="icon fullscreen-exit" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-description-container">
+          <p class="project-description">
+            Un voyage à travers des vies, des cultures, des gestes du quotidien, pleins de sens et d'émotion.
+            Chaque scène se fond dans la suivante, avec fluidité, comme un mouvement vers demain.
+            En prenant le temps d'écouter, on découvre ce qui compte vraiment pour chacun.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- To Craftsmen -->
+    <section class="section" id="craftsmen" data-bg-color="#1d5e4c">
+      <div class="project-container">
+        <div class="project-title-container">
+          <h2 class="project-title">To Craftsmen</h2>
+        </div>
+        <div class="project-video-container">
+          <div class="minimal-player">
+            <video poster="/api/placeholder/1280/720">
+              <source src="assets/videos/craftsmen.mp4" type="video/mp4">
+              Votre navigateur ne supporte pas la vidéo HTML5.
+            </video>
+            <div class="controls">
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div class="progress"></div>
+                </div>
+              </div>
+              <div class="control-buttons">
+                <button class="mute-button" aria-label="Mute">
+                  <svg class="icon volume-on" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                  </svg>
+                  <svg class="icon volume-off" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm-5.5 6.01l-2.28-2.28-2.43 2.43H3V9.84h1.61l6.13 6.13zm2.96-2.36c.4-.4.72-.89.93-1.43l-2.01-2.01c.06.94-.23 1.77-.73 2.45l1.81.99zm-7.85-9.82l-1.11 1.11 3.01 3.01 2.49-2.49-1.89-1.89c-.68.38-1.28.88-1.77 1.48l-.73-.73z"/>
+                  </svg>
+                </button>
+                <button class="fullscreen-button" aria-label="Full Screen">
+                  <svg class="icon fullscreen-enter" viewBox="0 0 24 24">
+                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                  </svg>
+                  <svg class="icon fullscreen-exit" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-description-container">
+          <p class="project-description">
+            Récit initiatique d'un voyage à travers l'Europe, à la rencontre des gestes rares et silencieux qui façonnent le luxe.
+            Un poète accompagne ce périple, tissant un lien entre les paysages traversés et la beauté des mains à l'œuvre.
+            Ce film est un hommage intime aux artisans : leur savoir-faire, leur humilité, leur grâce discrète.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bvlgari -->
+    <section class="section" id="bvlgari" data-bg-color="#4c3b5c">
+      <div class="project-container">
+        <div class="project-title-container">
+          <h2 class="project-title">Bvlgari - 30 Av. George V</h2>
+        </div>
+        <div class="project-video-container">
+          <div class="minimal-player">
+            <video poster="/api/placeholder/1280/720">
+              <source src="assets/videos/bvlgari.mp4" type="video/mp4">
+              Votre navigateur ne supporte pas la vidéo HTML5.
+            </video>
+            <div class="controls">
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div class="progress"></div>
+                </div>
+              </div>
+              <div class="control-buttons">
+                <button class="mute-button" aria-label="Mute">
+                  <svg class="icon volume-on" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                  </svg>
+                  <svg class="icon volume-off" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm-5.5 6.01l-2.28-2.28-2.43 2.43H3V9.84h1.61l6.13 6.13zm2.96-2.36c.4-.4.72-.89.93-1.43l-2.01-2.01c.06.94-.23 1.77-.73 2.45l1.81.99zm-7.85-9.82l-1.11 1.11 3.01 3.01 2.49-2.49-1.89-1.89c-.68.38-1.28.88-1.77 1.48l-.73-.73z"/>
+                  </svg>
+                </button>
+                <button class="fullscreen-button" aria-label="Full Screen">
+                  <svg class="icon fullscreen-enter" viewBox="0 0 24 24">
