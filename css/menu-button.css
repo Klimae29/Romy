@@ -1,0 +1,38 @@
+.ligne-container {
+  position: absolute;
+  top: 50px;
+  right: 40px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ligne {
+  position: relative;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: white;
+  transition: transform 0.3s ease;
+  align-self: flex-end;
+  transform-origin: right;
+  margin: 8px 0;
+  cursor: pointer;
+}
+
+.ligne::before {
+  content: '';
+  position: absolute;
+  top: -10px;      /* agrandit la zone cliquable vers le haut */
+  bottom: -10px;   /* vers le bas */
+  left: -10px;     /* vers la gauche */
+  right: -10px;    /* vers la droite */
+  /* important 👇 */
+  background: transparent;
+  pointer-events: auto;
+}
+
+.ligne:hover {
+  transform: scaleX(2);
+}
