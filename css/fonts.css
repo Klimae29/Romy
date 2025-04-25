@@ -7,7 +7,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Spécifiquement pour les titres de projets */
 .project-title {
-  font-family: 'Playfair Display', serif !important;
+  font-family: 'Playfair Display', serif;
   font-size: 42px;
   font-weight: 500;
   line-height: 1.2;
@@ -16,12 +16,12 @@ h1, h2, h3, h4, h5, h6 {
 /* Renforcement pour les titres dans les containers */
 .project-title-container h2,
 .section h2.project-title {
-  font-family: 'Playfair Display', serif !important;
+  font-family: 'Playfair Display', serif;
 }
 
 /* Style du titre d'accueil */
 .home-title {
-  font-family: 'Playfair Display', serif !important;
+  font-family: 'Playfair Display', serif;
   font-size: 120px;
   font-weight: 400;
   letter-spacing: 15px;
@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Menu items en Playfair */
 .menu-items a {
-  font-family: 'Playfair Display', serif !important;
+  font-family: 'Playfair Display', serif;
 }
 
 /* Pour tous les autres textes en Poppins */
@@ -44,5 +44,113 @@ p, span, button, a:not(.menu-items a), div, .project-description {
 .enter-button,
 .home-button,
 .scroll-indicator {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-changing {
+  animation: flash 0.1s;
+}
+
+@keyframes flash {
+  0% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+
+/* Assurez-vous également que le titre #romy n'a pas d'autres styles qui pourraient interférer */
+#romy {
+  transition: none !important; /* Désactive toute transition */
+  will-change: font-family;
+}
+
+/* Animation pour le titre ROMY */
+
+/* Cette classe sera ajoutée au titre lors des changements de police */
+.font-changing {
+  animation: flash 0.05s ease-in-out;
+}
+
+@keyframes flash {
+  0% { opacity: 0.7; }
+  50% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+
+/* Classe pour lisser le changement de police */
+#romy, .home-title {
+  transition: none !important;
+  will-change: font-family;
+}
+
+/* Forcer le titre à ne pas hériter des propriétés qui pourraient interférer */
+#romy {
+  font-family: inherit; /* Sera remplacé par JS */
+}
+
+/* Assurez-vous que les polices sont préchargées */
+@font-face {
+  font-family: 'Comic Sans MS';
+  src: local('Comic Sans MS');
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Amatic SC';
+  src: local('Amatic SC');
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Anton';
+  src: local('Anton');
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Orbitron';
+  src: local('Orbitron');
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Lucida Console';
+  src: local('Lucida Console');
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  src: local('Pacifico');
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Trebuchet MS';
+  src: local('Trebuchet MS');
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Impact';
+  src: local('Impact');
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Brush Script MT';
+  src: local('Brush Script MT');
+  font-display: block;
+}
+
+/* La classe suivante permet de pré-rendre les polices en les cachant */
+.font-preloader {
+  position: absolute;
+  left: -9999px;
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Assurez-vous que le titre n'a aucune transition qui pourrait ralentir le changement */
+.home-title {
+  animation: none !important;
+  transition: none !important;
 }
