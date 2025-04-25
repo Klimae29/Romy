@@ -6,7 +6,7 @@
 
 const FontPreloader = {
   fonts: [
-    "'Comic Sans MS', cursive",
+    "'Playfair Display', serif",
     "'Amatic SC', cursive",
     "'Anton', sans-serif",
     "'Orbitron', sans-serif",

@@ -172,19 +172,6 @@ body {
   font-weight: 300;
 }
 
-/* Indicateur de défilement */
-.scroll-indicator {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
-}
 
 /* Styles spécifiques à la page d'accueil */
 .home-page {
@@ -287,7 +274,6 @@ body {
   opacity: 1;
   transform: translate(-50%, -50%) translateX(0);
 }
-
 
 
 /* Amélioration de la transition entre sections */
