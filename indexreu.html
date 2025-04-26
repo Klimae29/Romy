@@ -21,26 +21,47 @@
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/menu-button.css">
+
+  <script src="js/menu-button.js" defer></script>
+
 </head>
 
 <body class="combined-page">
-  <!-- Menu de navigation -->
-  <button class="menu-toggle" id="menuToggle">Menu</button>
 
-  <div class="menu-panel" id="menuPanel">
-    <button class="menu-close" id="menuClose">Fermer</button>
-    <ul class="menu-items">
-      <li><a href="#home" class="nav-link">Accueil</a></li>
-      <li><a href="#allianz" class="nav-link">Allianz Travel</a></li>
-      <li><a href="#carrefour" class="nav-link">Carrefour</a></li>
-      <li><a href="#craftsmen" class="nav-link">To Craftsmen</a></li>
-      <li><a href="#bvlgari" class="nav-link">Bvlgari</a></li>
-      <li><a href="#bordeaux" class="nav-link">Les Vins de Bordeaux</a></li>
+    <div><!-- Menu de navigation masqué -->
+     <button class="menu-toggle" id="menuToggle">Menu</button>
+
+     <div class="menu-panel" id="menuPanel">
+       <button class="menu-close" id="menuClose">Fermer</button>
+       <ul class="menu-items">
+         <li><a href="#home" class="nav-link">Accueil</a></li>
+         <li><a href="#allianz" class="nav-link">Allianz Travel</a></li>
+         <li><a href="#carrefour" class="nav-link">Carrefour</a></li>
+         <li><a href="#craftsmen" class="nav-link">To Craftsmen</a></li>
+         <li><a href="#bvlgari" class="nav-link">Bvlgari</a></li>
+         <li><a href="#bordeaux" class="nav-link">Les Vins de Bordeaux</a></li>
+        </ul>
+      </div>
+    </div>
+
+      <!-- Conteneur principal avec toutes les sections -->
+      <main class="main-container">
+
+    <!-- Menu de navigation petites barres -->
+    <ul class="ligne-container">
+      <li>Accueil</li>
+      <!-- <li class="ligne ligne-1"><span class="hover-text">Accueil</span></li> -->
+      <li class="ligne ligne-2"><span class="hover-text">Allianz Travel</span></li>
+      <li class="ligne ligne-3"><span class="hover-text">Carrefour</span></li>
+      <li class="ligne ligne-4"><span class="hover-text">Craftsmen</span></li>
+      <li class="ligne ligne-5"><span class="hover-text">Bvlgari</span></li>
+      <li class="ligne ligne-6"><span class="hover-text">Les vins de Bordeaux</span></li>
+      <li>Contact</li>
     </ul>
-  </div>
-
-  <!-- Conteneur principal avec toutes les sections -->
-  <main class="main-container">
+    <!--Indicateur de scroll -->
+    <div class="mouse-wheel">
+      <div class="wheel"></div>
+    </div>
 
     <!-- Nouvelle page d'accueil inspirée de index.html -->
     <section class="section home active" id="home">
@@ -53,9 +74,6 @@
           <h1 class="home-title" id="romy">ROMY</h1>
         </div>
 
-        <div class="mouse-wheel">
-          <div class="wheel"></div>
-        </div>
 
         <!-- Préchargeur de polices (invisible) -->
         <div class="font-preloader">
@@ -70,15 +88,6 @@
           <span style="font-family: 'Brush Script MT', cursive">ROMY</span>
         </div>
 
-        <!-- Menu de navigation petites barres -->
-        <ul class="ligne-container">
-          <li class="ligne"></li>
-          <li class="ligne"></li>
-          <li class="ligne"></li>
-          <li class="ligne"></li>
-          <li class="ligne"></li>
-          <li class="ligne"></li>
-        </ul>
       </div>
     </section>
 
@@ -332,6 +341,9 @@
   <script src="js/font-preloader.js"></script>
   <script src="js/romy.js"></script>
   <script src="js/animations.js"></script>
+
+
+
 
 </body>
 </html>

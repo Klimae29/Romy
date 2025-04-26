@@ -284,7 +284,7 @@ const HomeAnimator = {
     // Utiliser un intervalle plus court (50ms) pour un changement plus rapide
     this.state.animationInterval = setInterval(() => {
       this.changeBackgroundAndFont();
-    }, 50); // Intervalle très court pour des changements rapides
+    }, 100); // Intervalle très court pour des changements rapides
 
     console.log("✅ Animation de la page d'accueil démarrée !");
   },

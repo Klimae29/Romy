@@ -5,7 +5,10 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 1px;
+  text-align: right;
+  font-size: 0.8rem;
+  z-index: 9998;
 }
 
 .ligne {
@@ -13,12 +16,23 @@
   width: 20px;
   height: 2px;
   border-radius: 2px;
-  background-color: white;
-  transition: transform 0.3s ease;
-  align-self: flex-end;
-  transform-origin: right;
-  margin: 8px 0;
+  background-color: transparent; /* on passe la couleur sur le ::after */
+  margin: 5px 0;
   cursor: pointer;
+  align-self: flex-end;
+}
+
+.ligne::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  background-color: white;
+  transform-origin: right;
+  transition: transform 0.3s ease;
 }
 
 .ligne::before {
@@ -33,6 +47,53 @@
   pointer-events: auto;
 }
 
-.ligne:hover {
+
+
+
+.ligne.active::after {
   transform: scaleX(2);
+}
+
+.ligne:hover::after {
+  background-color: rgb(153, 144, 144);
+}
+
+.hover-text {
+  position: absolute;
+  top: 50%;
+  right: 110%; /* à droite de la ligne */
+  transform: translateY(-50%);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.ligne:hover .hover-text {
+  opacity: 1;
+}
+
+.ligne .hover-text {
+  right: calc(100% + 10px);
+}
+
+.ligne.active .hover-text {
+  right: calc(100% + 30px);
+}
+
+
+
+
+
+
+
+#menuToggle {
+  display: none;
+}
+
+#menuPanel {
+  display: none;
 }
