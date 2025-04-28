@@ -14,7 +14,7 @@ const FontPreloader = {
     "'Pacifico', cursive",
     "'Trebuchet MS', sans-serif",
     "'Impact', sans-serif",
-    "'Brush Script MT', cursive"
+    "'Poppins', sans-serif",
   ],
 
   // Préchargement actif des polices

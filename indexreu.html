@@ -14,14 +14,31 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- Styles CSS -->
+  <link rel="stylesheet" href="css/home-animation.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/animations.css">
-  <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/responsive.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/menu-button.css">
+  <link rel="stylesheet" href="css/unified-animations.css">
+
+  <!-- Scripts JavaScript -->
+  <!-- Utilitaires et préchargeurs -->
+  <script src="js/font-preloader.js"></script>
+  <script src="js/gradients.js" defer></script>
+
+  <!-- Modules principaux -->
+  <script src="js/modules/transition-controller.js" defer></script>
+  <script src="js/modules/animation-controller.js" defer></script>
+  <script src="js/modules/section-navigator.js" defer></script>
+  <script src="js/modules/video-player.js" defer></script>
+  <script src="js/modules/home-animator.js" defer></script>
+  <script src="js/modules/menu-module.js" defer></script>
+
+  <!-- Script principal d'initialisation (à charger en dernier) -->
+  <script src="js/main.js" defer></script>
 </head>
+
 
 <body class="combined-page">
   <!-- Menu de navigation -->
@@ -36,6 +53,8 @@
       <li><a href="#craftsmen" class="nav-link">To Craftsmen</a></li>
       <li><a href="#bvlgari" class="nav-link">Bvlgari</a></li>
       <li><a href="#bordeaux" class="nav-link">Les Vins de Bordeaux</a></li>
+      <li><a href="#happn" class="nav-link">Happn</a></li>
+      <li><a href="#defense" class="nav-link">La Défense</a></li>
     </ul>
   </div>
 
@@ -67,11 +86,13 @@
           <span style="font-family: 'Pacifico', cursive">ROMY</span>
           <span style="font-family: 'Trebuchet MS', sans-serif">ROMY</span>
           <span style="font-family: 'Impact', sans-serif">ROMY</span>
-          <span style="font-family: 'Brush Script MT', cursive">ROMY</span>
+          <span style="font-family: 'Poppins', sans-serif">ROMY</span>
         </div>
 
         <!-- Menu de navigation petites barres -->
         <ul class="ligne-container">
+          <li class="ligne"></li>
+          <li class="ligne"></li>
           <li class="ligne"></li>
           <li class="ligne"></li>
           <li class="ligne"></li>
@@ -83,7 +104,7 @@
     </section>
 
     <!-- Allianz Travel -->
-    <section class="section project-section" id="allianz" data-bg-color="#1a3b5c">
+    <section class="section project-section" id="allianz" data-bg-color="#0d2340">
       <div class="project-container">
         <div class="project-title-container">
           <h2 class="project-title">Allianz Travel</h2>
@@ -132,7 +153,8 @@
     </section>
 
     <!-- Carrefour -->
-    <section class="section project-section" id="carrefour" data-bg-color="#7a1f1d">
+    <section class="section project-section" id="carrefour" data-bg-color="#102c50">
+
       <div class="project-container">
         <div class="project-title-container">
           <h2 class="project-title">Carrefour - Le goût des autres</h2>
@@ -181,7 +203,8 @@
     </section>
 
     <!-- To Craftsmen -->
-    <section class="section project-section" id="craftsmen" data-bg-color="#1d5e4c">
+    <section class="section project-section" id="craftsmen" data-bg-color="#18417a">
+
       <div class="project-container">
         <div class="project-title-container">
           <h2 class="project-title">To Craftsmen</h2>
@@ -230,7 +253,8 @@
     </section>
 
     <!-- Bvlgari -->
-    <section class="section project-section" id="bvlgari" data-bg-color="#4c3b5c">
+    <section class="section project-section" id="bvlgari" data-bg-color="#1e56a4">
+
       <div class="project-container">
         <div class="project-title-container">
           <h2 class="project-title">Bvlgari - 30 Av. George V</h2>
@@ -279,7 +303,7 @@
     </section>
 
     <!-- Les vins de Bordeaux -->
-    <section class="section project-section" id="bordeaux" data-bg-color="#541f21">
+    <section class="section project-section" id="bordeaux" data-bg-color="#246aca">
       <div class="project-container">
         <div class="project-title-container">
           <h2 class="project-title">Les Vins de Bordeaux</h2>
@@ -328,10 +352,103 @@
     </section>
   </main>
 
-  <!-- Scripts JavaScript -->
-  <script src="js/font-preloader.js"></script>
-  <script src="js/romy.js"></script>
-  <script src="js/animations.js"></script>
+  <!-- Happn -->
+  <section class="section project-section" id="happn" data-bg-color="#2a7df0">
+   <div class="project-container">
+    <div class="project-title-container">
+      <h2 class="project-title">Happn - L'amour est partout</h2>
+    </div>
+    <div class="project-video-container">
+      <div class="minimal-player">
+        <video poster="/api/placeholder/1280/720">
+          <source src="assets/videos/happn.mp4" type="video/mp4">
+          Votre navigateur ne supporte pas la vidéo HTML5.
+        </video>
+        <div class="controls">
+          <div class="progress-container">
+            <div class="progress-bar">
+              <div class="progress"></div>
+            </div>
+          </div>
+          <div class="control-buttons">
+            <button class="mute-button" aria-label="Mute">
+              <svg class="icon volume-on" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+              </svg>
+              <svg class="icon volume-off" viewBox="0 0 24 24" style="display: none;">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm-5.5 6.01l-2.28-2.28-2.43 2.43H3V9.84h1.61l6.13 6.13zm2.96-2.36c.4-.4.72-.89.93-1.43l-2.01-2.01c.06.94-.23 1.77-.73 2.45l1.81.99zm-7.85-9.82l-1.11 1.11 3.01 3.01 2.49-2.49-1.89-1.89c-.68.38-1.28.88-1.77 1.48l-.73-.73z"/>
+              </svg>
+            </button>
+            <button class="fullscreen-button" aria-label="Full Screen">
+              <svg class="icon fullscreen-enter" viewBox="0 0 24 24">
+                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+              </svg>
+              <svg class="icon fullscreen-exit" viewBox="0 0 24 24" style="display: none;">
+                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="project-description-container">
+      <p class="project-description">
+        Un regard fugace, un frisson, puis l’instant s’efface… sauf ici.
+        Les vies se croisent, les histoires naissent, les corps se frôlent.
+        Un film comme une bulle urbaine, où chaque rencontre peut tout changer.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- La Défense -->
+<section class="section project-section" id="defense" data-bg-color="#3b93ff">
+  <div class="project-container">
+    <div class="project-title-container">
+      <h2 class="project-title">La Défense - La vie en grand</h2>
+    </div>
+    <div class="project-video-container">
+      <div class="minimal-player">
+        <video poster="/api/placeholder/1280/720">
+          <source src="assets/videos/defense.mp4" type="video/mp4">
+          Votre navigateur ne supporte pas la vidéo HTML5.
+        </video>
+        <div class="controls">
+          <div class="progress-container">
+            <div class="progress-bar">
+              <div class="progress"></div>
+            </div>
+          </div>
+          <div class="control-buttons">
+            <button class="mute-button" aria-label="Mute">
+              <svg class="icon volume-on" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+              </svg>
+              <svg class="icon volume-off" viewBox="0 0 24 24" style="display: none;">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm-5.5 6.01l-2.28-2.28-2.43 2.43H3V9.84h1.61l6.13 6.13zm2.96-2.36c.4-.4.72-.89.93-1.43l-2.01-2.01c.06.94-.23 1.77-.73 2.45l1.81.99zm-7.85-9.82l-1.11 1.11 3.01 3.01 2.49-2.49-1.89-1.89c-.68.38-1.28.88-1.77 1.48l-.73-.73z"/>
+              </svg>
+            </button>
+            <button class="fullscreen-button" aria-label="Full Screen">
+              <svg class="icon fullscreen-enter" viewBox="0 0 24 24">
+                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+              </svg>
+              <svg class="icon fullscreen-exit" viewBox="0 0 24 24" style="display: none;">
+                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="project-description-container">
+      <p class="project-description">
+        Un regard, une obsession : je dois te retrouver.
+        Le quartier se transforme en décor cinématographique, course-poursuite, désir et mouvement.
+        En détournant les codes du film de parfum, cette fiction réinvente La Défense avec style et audace.
+      </p>
+    </div>
+  </div>
+</section>
 
 </body>
 </html>

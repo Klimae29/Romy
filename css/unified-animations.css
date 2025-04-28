@@ -1,0 +1,241 @@
+/**
+ * unified-animations.css - Système d'animation consolidé pour ROMY
+ * Ce fichier regroupe toutes les animations en un système cohérent
+ */
+
+/* Variables globales pour la cohérence des animations */
+:root {
+  --anim-duration: 0.8s;
+  --anim-base-delay: 0.15s;
+  --anim-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --fade-out-duration: 0.6s;
+}
+
+/* ===== STRUCTURE DES SECTIONS ===== */
+
+/* Structure de base des sections */
+.section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--anim-duration) var(--anim-easing),
+    visibility 0s linear var(--anim-duration);
+  will-change: opacity, visibility;
+}
+
+.section.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 10;
+  transition:
+    opacity var(--anim-duration) var(--anim-easing),
+    visibility 0s linear;
+}
+
+/* Section qui quitte l'écran */
+.section.leaving {
+  opacity: 0;
+  transition: opacity var(--fade-out-duration) var(--anim-easing);
+  z-index: 5;
+}
+
+/* ===== ANIMATIONS D'ENTRÉE ===== */
+
+/* Animation du titre - entrée depuis la gauche */
+.section:not(.active) .project-title-container {
+  opacity: 0;
+  transform: translateX(-60px);
+}
+
+.section.active .project-title-container {
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity var(--anim-duration) var(--anim-easing),
+    transform var(--anim-duration) var(--anim-easing);
+  transition-delay: calc(var(--anim-base-delay) * 1);
+}
+
+/* Animation du lecteur vidéo - entrée depuis le haut */
+.section:not(.active) .project-video-container {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+.section.active .project-video-container {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity var(--anim-duration) var(--anim-easing),
+    transform var(--anim-duration) var(--anim-easing);
+  transition-delay: calc(var(--anim-base-delay) * 2);
+}
+
+/* Animation de la description et son conteneur */
+.section:not(.active) .project-description-container,
+.section:not(.active) .project-description {
+  opacity: 0;
+}
+
+.section.active .project-description-container,
+.section.active .project-description {
+  opacity: 1;
+  transition: opacity var(--anim-duration) var(--anim-easing);
+}
+
+/* Animation ligne par ligne de la description */
+.section:not(.active) .project-description-line {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.section.active .project-description-line {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity var(--anim-duration) var(--anim-easing),
+    transform var(--anim-duration) var(--anim-easing);
+}
+
+/* Délais échelonnés pour les lignes */
+.section.active .project-description-line:nth-child(1) {
+  transition-delay: calc(var(--anim-base-delay) * 3);
+}
+
+.section.active .project-description-line:nth-child(2) {
+  transition-delay: calc(var(--anim-base-delay) * 4);
+}
+
+.section.active .project-description-line:nth-child(3) {
+  transition-delay: calc(var(--anim-base-delay) * 5);
+}
+
+.section.active .project-description-line:nth-child(4) {
+  transition-delay: calc(var(--anim-base-delay) * 6);
+}
+
+.section.active .project-description-line:nth-child(5) {
+  transition-delay: calc(var(--anim-base-delay) * 7);
+}
+
+/* ===== ANIMATIONS DE SORTIE ===== */
+
+/* Animation de sortie pour le titre - fondu simple sans déplacement */
+.section.leaving .project-title-container {
+  opacity: 0;
+  transform: translateX(0);
+  transition: opacity var(--fade-out-duration) var(--anim-easing);
+  transition-property: opacity;
+  transition-delay: 0s;
+}
+
+/* Animation de sortie pour la vidéo - disparaît vers le bas */
+.section.leaving .project-video-container {
+  opacity: 0;
+  transform: translateY(60px);
+  transition:
+    opacity var(--fade-out-duration) var(--anim-easing),
+    transform var(--fade-out-duration) var(--anim-easing);
+  transition-delay: 0s;
+}
+
+/* Animation de sortie pour les descriptions - fondu simple */
+.section.leaving .project-description-container,
+.section.leaving .project-description,
+.section.leaving .project-description-line {
+  opacity: 0;
+  transform: translateY(0);
+  transition: opacity var(--fade-out-duration) var(--anim-easing);
+  transition-property: opacity;
+  transition-delay: 0s;
+}
+
+/* ===== CLASSES UTILITAIRES ===== */
+
+/* Classe pour forcer la réinitialisation des animations */
+.section.resetting-animations .project-title-container,
+.section.resetting-animations .project-video-container,
+.section.resetting-animations .project-description-container,
+.section.resetting-animations .project-description,
+.section.resetting-animations .project-description-line {
+  transition: none !important;
+}
+
+/* Classe pour forcer l'application des animations */
+.section.active.playing-animations .project-title-container,
+.section.active.playing-animations .project-video-container,
+.section.active.playing-animations .project-description-container,
+.section.active.playing-animations .project-description,
+.section.active.playing-animations .project-description-line {
+  opacity: 1;
+  transform: translate(0);
+}
+
+/* Animation d'indicateur de défilement */
+.scroll-indicator {
+  animation: pulsate 2s infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes pulsate {
+  0% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 0.8; transform: translateY(-5px); }
+  100% { opacity: 0.3; transform: translateY(0); }
+}
+
+/* ===== OPTIMISATIONS DE PERFORMANCE ===== */
+
+/* Améliorations pour la fluidité des transitions */
+.project-title-container,
+.project-video-container,
+.project-description-container,
+.project-description,
+.project-description-line,
+.section {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  will-change: opacity, transform;
+}
+
+/* Transition de couleur de fond */
+body {
+  transition: background-color 1.2s ease;
+  will-change: background-color;
+}
+
+/* ===== ÉTATS DE CHARGEMENT ===== */
+
+/* État initial de chargement du site */
+body:not(.loaded) .section {
+  opacity: 0;
+}
+
+body.loaded .section.active {
+  opacity: 1;
+}
+
+/* ===== ACCESSIBILITÉ ===== */
+
+/* Support pour la réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --anim-duration: 0.2s;
+    --anim-base-delay: 0s;
+    --fade-out-duration: 0.2s;
+  }
+
+  .scroll-indicator {
+    animation: none;
+    opacity: 0.7;
+  }
+
+  .section.active .project-description-line:nth-child(n) {
+    transition-delay: 0s;
+  }
+}
