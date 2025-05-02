@@ -1,0 +1,167 @@
+/**
+ * home-animation.css - Styles spécifiques pour l'animation de la page d'accueil
+ */
+
+/* Styles pour la page d'accueil et l'animation du titre ROMY */
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.title-container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+#romy {
+  font-size: 15vw;
+  color: #fff;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  will-change: font-family, transform, opacity;
+}
+
+/* Animation de départ */
+#romy.appear {
+  animation: fadeIn 1.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Flash visuel lors du changement de police */
+#romy.font-changing {
+  opacity: 0.8;
+  transform: scale(1.02);
+}
+
+/* Styles pour les calques d'arrière-plan */
+.bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 0.8s ease;
+  z-index: -1;
+  opacity: 0;
+}
+
+/* Optimisations */
+#romy, .bg-layer {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Indicateur de défilement */
+.mouse-wheel {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.mouse-wheel:hover {
+  opacity: 1;
+}
+
+.wheel {
+  width: 4px;
+  height: 10px;
+  background-color: white;
+  border-radius: 2px;
+  margin-top: 10px;
+  animation: scrollWheel 1.5s infinite;
+}
+
+@keyframes scrollWheel {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(20px); opacity: 0; }
+}
+
+/* Navigation par petites barres */
+.ligne-container {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
+
+.ligne {
+  width: 20px;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ligne:hover, .ligne.active {
+  background-color: rgba(255, 255, 255, 1);
+  width: 30px;
+}
+
+/* Préchargement de polices (invisible) */
+.font-preloader {
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Media queries pour l'affichage responsive */
+@media (max-width: 768px) {
+  #romy {
+    font-size: 20vw; /* Police plus grande sur mobile */
+  }
+
+  .ligne-container {
+    right: 15px;
+  }
+
+  .ligne {
+    width: 15px;
+  }
+}
+
+/* Support pour la réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  #romy.appear {
+    animation: none;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .wheel {
+    animation: none;
+  }
+}
