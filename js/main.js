@@ -1,96 +1,108 @@
-/**
- * main.js - Script principal d'initialisation
- * Ce fichier coordonne l'initialisation de tous les modules du site
- */
+// main.js - Script principal d'initialisation du site ROMY
 
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('Initialisation du site ROMY...');
+  console.log("✅ DOM chargé !");
 
-  // Initialisation du menu
+  // Démarrer le menu
   initMenu();
 
-  // Initialiser les modules dans le bon ordre
-  const initSequence = async () => {
-    try {
-      // 1. Contrôleur de transitions en premier (dépendance de base)
-      await initModule(TransitionController);
-
-      // 2. Contrôleur d'animations (utilise TransitionController)
-      await initModule(AnimationController);
-
-      // 3. Navigateur de sections (utilise TransitionController)
-      await initModule(SectionNavigator);
-
-      // 4. Lecteur vidéo
-      await initModule(VideoPlayer);
-
-      // 5. Animateur de la page d'accueil (en dernier car moins critique)
-      await initModule(HomeAnimator);
-
-      // Marquer le site comme chargé
-      document.body.classList.add('loaded');
-
-      console.log('✅ Initialisation du site terminée avec succès!');
-    } catch (error) {
-      console.error('Erreur lors de l\'initialisation:', error);
-    }
-  };
-
-  initSequence();
+  // Attendre que les polices soient chargées avant de démarrer les modules
+  document.fonts.ready.then(() => {
+    console.log("✅ Toutes les polices Google Fonts sont chargées !");
+    // Démarrer tous les modules dans l'ordre
+    initSequence();
+  });
 });
 
-// Fonction utilitaire pour initialiser un module avec gestion d'erreur
+// Fonction qui démarre tous les modules dans l'ordre
+async function initSequence() {
+  try {
+    // Démarrer les modules principaux dans l'ordre
+    // Mais vérifier que chaque module existe avant de l'initialiser
+
+    if (window.TransitionController) {
+      await initModule(window.TransitionController);
+    }
+
+    if (window.AnimationController) {
+      await initModule(window.AnimationController);
+    }
+
+    if (window.SectionNavigator) {
+      await initModule(window.SectionNavigator);
+    }
+
+    if (window.VideoPlayer) {
+      await initModule(window.VideoPlayer);
+    }
+
+    // Vérifier que l'élément #romy existe avant d'initialiser HomeAnimator
+    if (document.querySelector('#romy') && window.HomeAnimator) {
+      await initModule(window.HomeAnimator);
+    }
+
+    // Marquer le site comme chargé
+    document.body.classList.add('loaded');
+    console.log("✅ Initialisation complète du site !");
+  } catch (error) {
+    console.error('Erreur lors de l\'initialisation:', error);
+  }
+}
+
+// Fonction qui démarre un module et gère les erreurs
 function initModule(module) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     try {
       if (!module) {
-        console.warn(`Module non trouvé, chargement ignoré`);
+        console.warn("Module non disponible");
         resolve();
         return;
       }
 
-      const moduleName = module.name || 'Module inconnu';
-      console.log(`Initialisation de ${moduleName}...`);
-
+      console.log(`Initialisation du module: ${module.name || 'Sans nom'}`);
       const result = module.init();
 
-      // Si le module renvoie une promesse, on l'attend
       if (result instanceof Promise) {
         result.then(() => {
-          console.log(`✅ ${moduleName} initialisé avec succès`);
+          console.log(`Module ${module.name || 'Sans nom'} initialisé avec succès`);
           resolve();
-        }).catch(err => {
-          console.error(`❌ Erreur lors de l'initialisation de ${moduleName}:`, err);
-          // On résout quand même pour ne pas bloquer la suite
-          resolve();
+        }).catch((error) => {
+          console.error(`Erreur lors de l'initialisation du module ${module.name || 'Sans nom'}:`, error);
+          resolve(); // Continue quand même
         });
       } else {
-        console.log(`✅ ${moduleName} initialisé avec succès`);
+        console.log(`Module ${module.name || 'Sans nom'} initialisé avec succès`);
         resolve();
       }
     } catch (error) {
-      console.error('Erreur d\'initialisation:', error);
-      // On résout quand même pour ne pas bloquer la suite
-      resolve();
+      console.error(`Erreur lors de l'initialisation d'un module:`, error);
+      resolve(); // Continue quand même
     }
   });
 }
 
-// Initialisation du menu
+// Configuration du menu
 function initMenu() {
   const menuToggle = document.getElementById('menuToggle');
   const menuClose = document.getElementById('menuClose');
   const menuPanel = document.getElementById('menuPanel');
   const menuLinks = document.querySelectorAll('.menu-items a');
 
-  if (menuToggle && menuPanel) {
-    menuToggle.addEventListener('click', function() {
-      menuPanel.classList.add('active');
-    });
+  if (!menuToggle || !menuPanel) {
+    console.warn("Éléments du menu manquants");
+    return;
   }
 
-  if (menuClose && menuPanel) {
-    menuClose.addEventListener('click', function() {
+  console.log("Configuration du menu...");
+
+  // Bouton pour ouvrir le menu
+  menuToggle.addEventListener('click', () => {
+    menuPanel.classList.add('active');
+  });
+
+  // Bouton pour fermer le menu
+  if (menuClose) {
+    menuClose.addEventListener('click', () => {
       menuPanel.classList.remove('active');
     });
   }
@@ -99,19 +111,25 @@ function initMenu() {
   menuLinks.forEach(link => {
     link.addEventListener('click', function(e) {
       e.preventDefault();
-
-      // Récupérer l'ID de la section cible depuis l'attribut href
       const targetId = this.getAttribute('href').substring(1);
-
-      // Fermer le menu
       menuPanel.classList.remove('active');
 
-      // Naviguer vers la section
+      // Naviguer vers la section si SectionNavigator est disponible
       if (window.SectionNavigator) {
         window.SectionNavigator.navigateTo(targetId);
+      } else {
+        console.warn("SectionNavigator non disponible");
+        // Fallback si le navigateur de section n'est pas disponible
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+          });
+          targetSection.classList.add('active');
+        }
       }
     });
   });
 
-  console.log('✅ Menu initialisé');
+  console.log("✅ Menu configuré avec succès");
 }

@@ -1,26 +1,26 @@
 /**
  * home-animator.js - Module pour l'animation de la page d'accueil
- * Ce module gère les animations de titre et d'arrière-plan de la page d'accueil
+ * Version adaptée avec bonne structure de fichiers
  */
 
 const HomeAnimator = (function() {
   // Configuration
   const config = {
-    animationInterval: 2000,  // Intervalle entre les changements (ms)
-    initialDelay: 1000        // Délai avant le premier changement (ms)
+    animationInterval: 50,  // Intervalle identique à l'original (50ms)
+    initialDelay: 0         // Pas de délai initial comme dans l'original
   };
 
-  // Paires police/image
+  // Paires police/image avec les polices de la deuxième version
   const pairs = [
-    { font: "'Playfair Display', serif", image: "assets/images/index_univ_1.png" },
-    { font: "'Amatic SC', cursive", image: "assets/images/index_univ_2.png" },
-    { font: "'Anton', sans-serif", image: "assets/images/index_univ_3.png" },
-    { font: "'Orbitron', sans-serif", image: "assets/images/index_univ_4.png" },
-    { font: "'Lucida Console', monospace", image: "assets/images/index_univ_5.png" },
-    { font: "'Pacifico', cursive", image: "assets/images/index_univ_6.png" },
-    { font: "'Trebuchet MS', sans-serif", image: "assets/images/index_univ_7.png" },
-    { font: "'Impact', sans-serif", image: "assets/images/index_univ_8.png" },
-    { font: "'Poppins', sans-serif", image: "assets/images/index_univ_9.png" }
+    { font: "'Playfair Display', serif", image: "index_univ_1.png" },
+    { font: "'Amatic SC', cursive", image: "index_univ_2.png" },
+    { font: "'Anton', sans-serif", image: "index_univ_3.png" },
+    { font: "'Orbitron', sans-serif", image: "index_univ_4.png" },
+    { font: "'Lucida Console', monospace", image: "index_univ_5.png" },
+    { font: "'Pacifico', cursive", image: "index_univ_6.png" },
+    { font: "'Trebuchet MS', sans-serif", image: "index_univ_7.png" },
+    { font: "'Impact', sans-serif", image: "index_univ_8.png" },
+    { font: "'Poppins', sans-serif", image: "index_univ_9.png" }
   ];
 
   // État
@@ -36,17 +36,23 @@ const HomeAnimator = (function() {
   let bg1 = null;
   let bg2 = null;
 
-  // Technique de force-redraw pour s'assurer que le changement de police est visible
+  // Fonction pour obtenir le chemin correct des images
+  function getImagePath(imageName) {
+    // home_animator.js est dans js/modules/
+    // images sont dans assets/images/
+    // Il faut donc remonter de deux niveaux avec ../..
+    return `../../assets/images/${imageName}`;
+  }
+
+  // Fonctions reprises de l'original
   function forceRedraw(element) {
     if (!element) return;
-    // Ces opérations forcent le navigateur à redessiner l'élément
     const display = element.style.display;
     element.style.display = 'none';
-    void element.offsetHeight; // Force un reflow
+    void element.offsetHeight;
     element.style.display = display;
   }
 
-  // Créer un calque d'arrière-plan si nécessaire
   function createBackgroundLayer(id) {
     const bg = document.createElement('div');
     bg.id = id;
@@ -70,7 +76,6 @@ const HomeAnimator = (function() {
     return bg;
   }
 
-  // Précharger les polices pour éviter les sauts lors des changements
   function preloadFont(fontFamily, text) {
     const preloader = document.createElement('div');
     preloader.style.fontFamily = fontFamily;
@@ -80,25 +85,24 @@ const HomeAnimator = (function() {
     preloader.textContent = text || 'ROMY';
     document.body.appendChild(preloader);
 
-    // Supprimer après un court délai
     setTimeout(() => {
       document.body.removeChild(preloader);
     }, 100);
   }
 
-  // Précharger les images
   function preloadImages() {
     pairs.forEach(({ image }) => {
       const img = new Image();
-      img.src = image;
-      // Ajouter un gestionnaire d'erreur pour détecter les images manquantes
+      img.src = getImagePath(image);
       img.onerror = () => {
-        console.warn(`Impossible de charger l'image: ${image}`);
+        console.warn(`Impossible de charger l'image: ${img.src}`);
+        // Log des détails pour faciliter le débogage
+        console.log(`Tentative avec le chemin: ${img.src}`);
+        console.log(`Image relative au HTML: ${image}`);
       };
     });
   }
 
-  // Changer la police et l'arrière-plan
   function changeBackgroundAndFont() {
     if (!romyTitle) return;
 
@@ -107,17 +111,17 @@ const HomeAnimator = (function() {
     // Précharger la police
     preloadFont(current.font);
 
-    // Changer la police avec forceRedraw
+    // Technique 1: Changement direct avec forceRedraw
     romyTitle.style.fontFamily = current.font;
     forceRedraw(romyTitle);
 
-    // Animation Flash pour rendre le changement plus visible
+    // Technique 2: Animation Flash
     romyTitle.classList.add('font-changing');
     setTimeout(() => {
       romyTitle.classList.remove('font-changing');
     }, 50);
 
-    // Technique supplémentaire pour forcer un redraw
+    // Technique 3: Changer le contenu temporairement
     const originalText = romyTitle.textContent;
     romyTitle.textContent = originalText + ' ';
     setTimeout(() => {
@@ -129,8 +133,12 @@ const HomeAnimator = (function() {
     const nextBg = state.toggle ? bg2 : bg1;
 
     if (nextBg && current.image) {
-      nextBg.style.backgroundImage = `url(${current.image})`;
+      const imagePath = getImagePath(current.image);
+      nextBg.style.backgroundImage = `url(${imagePath})`;
       nextBg.style.opacity = 1;
+
+      // Log pour débogage
+      console.log(`Image chargée: ${imagePath}`);
     }
 
     if (currentBg) {
@@ -144,120 +152,127 @@ const HomeAnimator = (function() {
     console.log(`Police changée pour: ${current.font}`);
   }
 
-  // Démarrer l'animation
   function startAnimation() {
     if (state.animationStarted) return;
 
-    console.log("Démarrage de l'animation d'accueil...");
+    console.log("Démarrage de l'animation...");
 
-    // Forcer la suppression de tout attribut qui pourrait interférer
     if (romyTitle) {
       romyTitle.setAttribute('style', 'transition: none !important; will-change: font-family !important;');
     }
 
     state.animationStarted = true;
 
-    // Premier changement après un délai initial
-    setTimeout(() => {
+    // Utiliser un intervalle identique à l'original
+    state.animationInterval = setInterval(() => {
       changeBackgroundAndFont();
-
-      // Puis démarrer l'intervalle régulier
-      state.animationInterval = setInterval(() => {
-        changeBackgroundAndFont();
-      }, config.animationInterval);
-    }, config.initialDelay);
+    }, config.animationInterval);
 
     console.log("✅ Animation de la page d'accueil démarrée !");
   }
 
-  // Arrêter l'animation
   function stopAnimation() {
-    if (!state.animationStarted) return;
-
     if (state.animationInterval) {
       clearInterval(state.animationInterval);
       state.animationInterval = null;
     }
-
     state.animationStarted = false;
-    console.log("Animation d'accueil arrêtée.");
+    console.log("Animation arrêtée.");
   }
 
-  // Initialisation
   function init() {
+    console.log("HomeAnimator: Initialisation...");
+
     // Sélectionner les éléments DOM
     romyTitle = document.querySelector('#romy');
-    bg1 = document.querySelector('#bg1') || createBackgroundLayer('bg1');
-    bg2 = document.querySelector('#bg2') || createBackgroundLayer('bg2');
 
+    // Vérifier si l'élément a été trouvé
     if (!romyTitle) {
       console.error("ERREUR: L'élément #romy n'a pas été trouvé!");
-      return;
+      // Tentative alternative de sélection
+      romyTitle = document.querySelector('.home-title');
+      console.log("Tentative alternative:", romyTitle);
+
+      if (!romyTitle) {
+        console.error("Impossible de trouver le titre ROMY, animation désactivée");
+        return false;
+      }
     }
+
+    // Sélectionner ou créer les calques d'arrière-plan
+    bg1 = document.querySelector('#bg1') || createBackgroundLayer('bg1');
+    bg2 = document.querySelector('#bg2') || createBackgroundLayer('bg2');
 
     // Supprimer les transitions et styles potentiellement conflictuels
     romyTitle.style.transition = "none";
     romyTitle.style.willChange = "font-family";
+    romyTitle.setAttribute('style', 'transition: none !important; will-change: font-family !important;');
 
     // Préchargement des images
     preloadImages();
 
     // Initialiser l'affichage
-    if (bg1) {
-      bg1.style.backgroundImage = `url(${pairs[0].image})`;
-      bg1.style.opacity = 1;
-    }
-
-    // Ajouter la classe appear pour l'animation initiale
-    romyTitle.classList.add("appear");
+    setupInitialDisplay();
 
     // Configurer les gestionnaires d'événements
     setupEventListeners();
 
     console.log("✅ Animation de la page d'accueil initialisée !");
+    return true;
   }
 
-  // Configurer les gestionnaires d'événements
-  function setupEventListeners() {
-    // Démarrer l'animation au premier scroll
-    window.addEventListener("wheel", () => {
-      // Vérifier qu'on est sur la section d'accueil
-      const homeSection = document.querySelector('.section.active#home');
-      if (homeSection) {
-        startAnimation();
-      }
-    }, { once: false });
+  function setupInitialDisplay() {
+    // Première police et image
+    if (romyTitle) {
+      romyTitle.style.fontFamily = pairs[0].font;
+    }
+    if (bg1) {
+      bg1.style.backgroundImage = `url(${getImagePath(pairs[0].image)})`;
+      bg1.style.opacity = 1;
+    }
+    if (romyTitle) {
+      romyTitle.classList.add("appear");
+    }
+  }
 
-    // Également démarrer l'animation sur click pour mobile
+  function setupEventListeners() {
+    // Comportement identique à l'original: démarrage au premier scroll
+    window.addEventListener("wheel", () => {
+      startAnimation();
+    }, { once: true });
+
+    // Démarrage au clic (comme dans l'original)
     if (romyTitle) {
       romyTitle.addEventListener('click', () => {
         startAnimation();
       });
     }
 
-    // Démarrer l'animation sur touch pour mobile
-    window.addEventListener("touchstart", () => {
-      const homeSection = document.querySelector('.section.active#home');
-      if (homeSection && !state.animationStarted) {
+    // Support pour le démarrage via un bouton dédié
+    const startButton = document.getElementById('startAnimation');
+    if (startButton) {
+      startButton.addEventListener('click', () => {
         startAnimation();
-      }
-    }, { once: true });
+      });
+    }
 
-    // Event listener pour la sélection de section (pour arrêter l'animation quand on quitte home)
+    // Écouter les événements de transition pour la compatibilité avec l'architecture modulaire
     document.addEventListener('sectionTransitionComplete', (event) => {
-      const section = event.detail.section;
-      if (section && section.id !== 'home') {
+      if (event.detail && event.detail.section && event.detail.section.id !== 'home') {
         stopAnimation();
       }
     });
   }
 
-  // API publique
+  // API publique (identique à celle exposée par l'original)
   return {
     init: init,
     startAnimation: startAnimation,
     stopAnimation: stopAnimation,
-    get state() { return { ...state }; }  // Exposer une copie de l'état
+    // Exposer l'état comme dans l'original
+    state: state,
+    // Exposer les paires pour référence
+    pairs: pairs
   };
 })();
 
