@@ -1,0 +1,54 @@
+/* Effet pellicule vidéo - version corrigée pour votre HTML */
+
+/* Conteneur vidéo avec espace supplémentaire */
+.project-video-container {
+  position: relative;
+  overflow: visible !important;
+  margin: 30px 0; /* Espace pour les vidéos dupliquées */
+}
+
+/* Style de base pour les clones de vidéo */
+.film-clone {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 60%; /* Hauteur visible des clones */
+  opacity: 0.25; /* Opacité réduite */
+  pointer-events: none; /* Ne capte pas les interactions */
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* Clone du haut */
+.film-clone-top {
+  bottom: calc(100% + 10px); /* Position au-dessus avec 10px d'espace */
+}
+
+/* Clone du bas */
+.film-clone-bottom {
+  top: calc(100% + 10px); /* Position en-dessous avec 10px d'espace */
+}
+
+/* Ajuster la position des vidéos dans les clones */
+.film-clone-top .minimal-player {
+  position: absolute;
+  width: 100%;
+  bottom: 0; /* Aligné sur le bas pour montrer la partie supérieure */
+}
+
+.film-clone-bottom .minimal-player {
+  position: absolute;
+  width: 100%;
+  top: 0; /* Aligné sur le haut pour montrer la partie inférieure */
+}
+
+/* Cacher les contrôles sur les clones */
+.film-clone .controls {
+  display: none !important;
+}
+
+/* S'assurer que les clones restent visibles pendant les transitions */
+.section.active .film-clone,
+.section.leaving .film-clone {
+  visibility: visible !important;
+}
