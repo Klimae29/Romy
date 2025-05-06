@@ -9,6 +9,9 @@
   text-align: right;
   font-size: 0.8rem;
   z-index: 9998;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
 }
 
 .ligne {
@@ -106,6 +109,8 @@
 .ligne.always-visible::after {
   display: none; /* pas besoin de la petite barre blanche pour Accueil */
 }
+
+
 
 .accueil:hover {
   cursor: pointer;
