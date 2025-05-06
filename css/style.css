@@ -309,12 +309,14 @@ body.loaded .section.active {
   display: block;
   position: absolute;
   bottom: 30px;
-  left:50%;
+  left: 93%;
   width: 30px;
   height: 50px;
   border: 2px solid #fff;
   border-radius: 15px;
   z-index: 20;
+  opacity: 0.6;
+  transition: opacity 0.5s ease;
 }
 
 .wheel {

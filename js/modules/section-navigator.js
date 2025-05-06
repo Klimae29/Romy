@@ -6,8 +6,8 @@
 const SectionNavigator = (function() {
   // Configuration
   const config = {
-    scrollDelay: 700,     // Délai entre deux défilements (ms)
-    wheelThreshold: 20    // Seuil de détection pour le défilement
+    scrollDelay: 500,     // Délai entre deux défilements (ms)
+    wheelThreshold: 30    // Seuil de détection pour le défilement
   };
 
   // État
