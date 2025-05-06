@@ -18,18 +18,19 @@ const ligne7 = document.querySelector(".ligne-7");
 const ligne8 = document.querySelector(".ligne-8");
 const projetSection = document.querySelectorAll(".project-section");
 const ligneContainer = document.querySelector(".ligne-container");
+const logoRomy = document.querySelector(".logoRomy");
 
 // Fonction pour ne pas afficher le menu sur la page d'accueil
-console.log(projetSection, "Super 😁");
 
-// Fonction : montre/masque le menu si une section projet est active
 function toggleMenuVisibility() {
   const showMenu = Array.from(projetSection).some(section =>
     section.classList.contains("active")
   );
 
-  ligneContainer.style.opacity = showMenu ? "1" : "0";
+  ligneContainer.style.opacity = showMenu ? "0.6" : "0";
   ligneContainer.style.pointerEvents = showMenu ? "auto" : "none";
+  logoRomy.style.opacity = showMenu ? "0.6" : "0";
+  logoRomy.style.pointerEvents = showMenu ? "auto" : "none";
 }
 
 // Fonction pour vérifier l'activation des sections et ajuster les lignes

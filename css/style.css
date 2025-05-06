@@ -315,6 +315,8 @@ body.loaded .section.active {
   border: 2px solid #fff;
   border-radius: 15px;
   z-index: 20;
+  opacity: 0.6;
+  transition: opacity 0.5s ease;
 }
 
 .wheel {
