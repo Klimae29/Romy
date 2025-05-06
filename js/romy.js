@@ -304,8 +304,8 @@ const HomeAnimator = {
 const SectionNavigator = {
   // Configuration
   config: {
-    scrollDelay: 1000,
-    wheelThreshold: 50
+    scrollDelay: 500,
+    wheelThreshold: 30
   },
 
   // État
