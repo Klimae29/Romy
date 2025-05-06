@@ -1,8 +1,3 @@
-/**
- * unified-animations.css - Système d'animation consolidé pour ROMY
- * Ce fichier regroupe toutes les animations en un système cohérent
- */
-
 /* Variables globales pour la cohérence des animations */
 :root {
   --anim-duration: 0.8s;
@@ -22,9 +17,8 @@
   width: 100%;
   opacity: 0;
   visibility: hidden;
-  transition:
-    opacity var(--anim-duration) var(--anim-easing),
-    visibility 0s linear var(--anim-duration);
+  transition: opacity var(--anim-duration) var(--anim-easing),
+              visibility 0s linear var(--anim-duration);
   will-change: opacity, visibility;
 }
 
@@ -32,74 +26,71 @@
   opacity: 1;
   visibility: visible;
   z-index: 10;
-  transition:
-    opacity var(--anim-duration) var(--anim-easing),
-    visibility 0s linear;
+  transition: opacity var(--anim-duration) var(--anim-easing),
+              visibility 0s linear;
 }
 
 /* Section qui quitte l'écran */
 .section.leaving {
   opacity: 0;
+  visibility: visible; /* Garder visible pendant l'animation de sortie */
   transition: opacity var(--fade-out-duration) var(--anim-easing);
   z-index: 5;
 }
 
 /* ===== ANIMATIONS D'ENTRÉE ===== */
 
-/* Animation du titre - entrée depuis la gauche */
-.section:not(.active) .project-title-container {
+/* État initial des éléments (avant animation d'entrée) */
+.section .project-title-container {
   opacity: 0;
   transform: translateX(-60px);
+  transition: none; /* Pas de transition initiale */
 }
 
+.section .project-video-container {
+  opacity: 0;
+  transform: translateY(-60px);
+  transition: none; /* Pas de transition initiale */
+}
+
+.section .project-description-container,
+.section .project-description,
+.section .project-description-line {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: none; /* Pas de transition initiale */
+}
+
+/* Animation d'entrée */
 .section.active .project-title-container {
   opacity: 1;
   transform: translateX(0);
-  transition:
-    opacity var(--anim-duration) var(--anim-easing),
-    transform var(--anim-duration) var(--anim-easing);
+  transition: opacity var(--anim-duration) var(--anim-easing),
+              transform var(--anim-duration) var(--anim-easing);
   transition-delay: calc(var(--anim-base-delay) * 1);
-}
-
-/* Animation du lecteur vidéo - entrée depuis le haut */
-.section:not(.active) .project-video-container {
-  opacity: 0;
-  transform: translateY(-60px);
 }
 
 .section.active .project-video-container {
   opacity: 1;
   transform: translateY(0);
-  transition:
-    opacity var(--anim-duration) var(--anim-easing),
-    transform var(--anim-duration) var(--anim-easing);
+  transition: opacity var(--anim-duration) var(--anim-easing),
+              transform var(--anim-duration) var(--anim-easing);
   transition-delay: calc(var(--anim-base-delay) * 2);
-}
-
-/* Animation de la description et son conteneur */
-.section:not(.active) .project-description-container,
-.section:not(.active) .project-description {
-  opacity: 0;
 }
 
 .section.active .project-description-container,
 .section.active .project-description {
   opacity: 1;
-  transition: opacity var(--anim-duration) var(--anim-easing);
-}
-
-/* Animation ligne par ligne de la description */
-.section:not(.active) .project-description-line {
-  opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(0);
+  transition: opacity var(--anim-duration) var(--anim-easing),
+              transform var(--anim-duration) var(--anim-easing);
 }
 
 .section.active .project-description-line {
   opacity: 1;
   transform: translateY(0);
-  transition:
-    opacity var(--anim-duration) var(--anim-easing),
-    transform var(--anim-duration) var(--anim-easing);
+  transition: opacity var(--anim-duration) var(--anim-easing),
+              transform var(--anim-duration) var(--anim-easing);
 }
 
 /* Délais échelonnés pour les lignes */
@@ -125,117 +116,43 @@
 
 /* ===== ANIMATIONS DE SORTIE ===== */
 
-/* Animation de sortie pour le titre - fondu simple sans déplacement */
+/* Animation de sortie pour le titre */
 .section.leaving .project-title-container {
   opacity: 0;
-  transform: translateX(0);
-  transition: opacity var(--fade-out-duration) var(--anim-easing);
-  transition-property: opacity;
+  transform: translateX(-30px); /* Direction inverse de l'entrée */
+  transition: opacity var(--fade-out-duration) var(--anim-easing),
+              transform var(--fade-out-duration) var(--anim-easing);
   transition-delay: 0s;
 }
 
-/* Animation de sortie pour la vidéo - disparaît vers le bas */
+/* Animation de sortie pour la vidéo */
 .section.leaving .project-video-container {
   opacity: 0;
   transform: translateY(60px);
-  transition:
-    opacity var(--fade-out-duration) var(--anim-easing),
-    transform var(--fade-out-duration) var(--anim-easing);
-  transition-delay: 0s;
+  transition: opacity var(--fade-out-duration) var(--anim-easing),
+              transform var(--fade-out-duration) var(--anim-easing);
+  transition-delay: 0.05s;
 }
 
-/* Animation de sortie pour les descriptions - fondu simple */
+/* Animation de sortie pour les descriptions */
 .section.leaving .project-description-container,
 .section.leaving .project-description,
 .section.leaving .project-description-line {
   opacity: 0;
-  transform: translateY(0);
-  transition: opacity var(--fade-out-duration) var(--anim-easing);
-  transition-property: opacity;
-  transition-delay: 0s;
+  transform: translateY(-30px);
+  transition: opacity var(--fade-out-duration) var(--anim-easing),
+              transform var(--fade-out-duration) var(--anim-easing);
+  transition-delay: 0.1s;
 }
 
-/* ===== CLASSES UTILITAIRES ===== */
-
-/* Classe pour forcer la réinitialisation des animations */
-.section.resetting-animations .project-title-container,
-.section.resetting-animations .project-video-container,
-.section.resetting-animations .project-description-container,
-.section.resetting-animations .project-description,
-.section.resetting-animations .project-description-line {
-  transition: none !important;
+/* Force les animations de sortie à être visibles */
+body.transition-in-progress .section.leaving {
+  z-index: 20 !important; /* Priorité plus élevée que tout */
+  visibility: visible !important;
 }
 
-/* Classe pour forcer l'application des animations */
-.section.active.playing-animations .project-title-container,
-.section.active.playing-animations .project-video-container,
-.section.active.playing-animations .project-description-container,
-.section.active.playing-animations .project-description,
-.section.active.playing-animations .project-description-line {
-  opacity: 1;
-  transform: translate(0);
-}
-
-/* Animation d'indicateur de défilement */
-.scroll-indicator {
-  animation: pulsate 2s infinite;
-  will-change: opacity, transform;
-}
-
-@keyframes pulsate {
-  0% { opacity: 0.3; transform: translateY(0); }
-  50% { opacity: 0.8; transform: translateY(-5px); }
-  100% { opacity: 0.3; transform: translateY(0); }
-}
-
-/* ===== OPTIMISATIONS DE PERFORMANCE ===== */
-
-/* Améliorations pour la fluidité des transitions */
-.project-title-container,
-.project-video-container,
-.project-description-container,
-.project-description,
-.project-description-line,
-.section {
-  backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  will-change: opacity, transform;
-}
-
-/* Transition de couleur de fond */
-body {
-  transition: background-color 1.2s ease;
-  will-change: background-color;
-}
-
-/* ===== ÉTATS DE CHARGEMENT ===== */
-
-/* État initial de chargement du site */
-body:not(.loaded) .section {
-  opacity: 0;
-}
-
-body.loaded .section.active {
-  opacity: 1;
-}
-
-/* ===== ACCESSIBILITÉ ===== */
-
-/* Support pour la réduction de mouvement */
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --anim-duration: 0.2s;
-    --anim-base-delay: 0s;
-    --fade-out-duration: 0.2s;
-  }
-
-  .scroll-indicator {
-    animation: none;
-    opacity: 0.7;
-  }
-
-  .section.active .project-description-line:nth-child(n) {
-    transition-delay: 0s;
-  }
+/* Empêche la nouvelle section d'apparaître trop tôt */
+body.transition-in-progress .section:not(.leaving) {
+  visibility: hidden !important;
+  opacity: 0 !important;
 }

@@ -6,8 +6,9 @@
 const HomeAnimator = (function() {
   // Configuration
   const config = {
-    animationInterval: 50,  // Intervalle identique à l'original (50ms)
-    initialDelay: 0         // Pas de délai initial comme dans l'original
+    animationInterval: 100,  // Intervalle identique à l'original (50ms)
+    initialDelay: 0,         // Pas de délai initial comme dans l'original
+    scrollLockDuration: 5000  // Nouvelle option: verrouiller le défilement pendant 5 secondes
   };
 
   // Paires police/image avec les polices de la deuxième version
@@ -24,12 +25,13 @@ const HomeAnimator = (function() {
   ];
 
   // État
-  let state = {
-    index: 0,
-    toggle: false,
-    animationStarted: false,
-    animationInterval: null
-  };
+let state = {
+  index: 0,
+  toggle: false,
+  animationStarted: false,
+  animationInterval: null,
+  animationStartTime: null  // Ajoutez cette propriété si elle n'y est pas
+};
 
   // Éléments DOM
   let romyTitle = null;
@@ -119,7 +121,7 @@ const HomeAnimator = (function() {
     romyTitle.classList.add('font-changing');
     setTimeout(() => {
       romyTitle.classList.remove('font-changing');
-    }, 50);
+    }, 100);
 
     // Technique 3: Changer le contenu temporairement
     const originalText = romyTitle.textContent;
@@ -162,6 +164,7 @@ const HomeAnimator = (function() {
     }
 
     state.animationStarted = true;
+    state.animationStartTime = Date.now(); // Ajoutez cette ligne
 
     // Utiliser un intervalle identique à l'original
     state.animationInterval = setInterval(() => {
@@ -178,6 +181,23 @@ const HomeAnimator = (function() {
     }
     state.animationStarted = false;
     console.log("Animation arrêtée.");
+  }
+
+  function handleScroll(event) {
+    // Si l'animation est en cours et que le temps minimum n'est pas écoulé
+    if (state.animationStarted && Date.now() - state.animationStartTime < config.scrollLockDuration) {
+      // Empêcher le défilement standard
+      event.preventDefault();
+      event.stopPropagation(); // Ajouter cette ligne
+
+      // Log pour déboguer
+      console.log("Défilement bloqué :", Date.now() - state.animationStartTime, "ms depuis le début");
+
+      return false;
+    } else {
+      // Log pour déboguer
+      console.log("Défilement autorisé :", Date.now() - state.animationStartTime, "ms depuis le début");
+    }
   }
 
   function init() {
@@ -236,10 +256,14 @@ const HomeAnimator = (function() {
   }
 
   function setupEventListeners() {
-    // Comportement identique à l'original: démarrage au premier scroll
-    window.addEventListener("wheel", () => {
-      startAnimation();
-    }, { once: true });
+    // Comportement modifié: démarrage au premier scroll et blocage temporaire
+    window.addEventListener("wheel", (event) => {
+      if (!state.animationStarted) {
+        startAnimation();
+      }
+      // Empêcher le défilement pendant la durée définie
+      handleScroll(event);
+    }, { passive: false }); // Important: passive: false permet d'utiliser preventDefault()
 
     // Démarrage au clic (comme dans l'original)
     if (romyTitle) {

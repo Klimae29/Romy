@@ -45,7 +45,7 @@ const TransitionController = (function() {
     });
   }
 
-  // Transition vers une nouvelle section
+  // Transition vers une nouvelle section avec délai pour animations de sortie
   function transitionTo(targetSection) {
     if (state.isTransitioning || !targetSection) return false;
 
@@ -56,16 +56,36 @@ const TransitionController = (function() {
     state.previousSection = state.currentSection;
     state.currentSection = targetSection;
 
-    // Appliquer les classes pour déclencher les transitions CSS
+    // SOLUTION RADICALE : Isoler complètement les deux phases
     if (state.previousSection) {
+      // 1. Retirer active et ajouter leaving à la section précédente
       state.previousSection.classList.remove('active');
       state.previousSection.classList.add('leaving');
+
+      // Forcer un reflow pour s'assurer que les styles sont appliqués immédiatement
+      void state.previousSection.offsetWidth;
+
+      // 2. BLOQUER temporairement toute autre mise à jour pendant l'animation de sortie
+      document.body.classList.add('transition-in-progress');
+
+      console.log("Animation de sortie démarrée");
+
+      // Attendre exactement la durée de l'animation de sortie
+      setTimeout(() => {
+        console.log("Animation de sortie terminée");
+
+        // 3. Seulement APRÈS l'animation de sortie, activer la nouvelle section
+        document.body.classList.remove('transition-in-progress');
+        targetSection.classList.add('active');
+
+        // Mettre à jour la couleur de fond
+        updateBackgroundColor(targetSection);
+      }, 600); // Durée fixe correspondant à --fade-out-duration (0.6s)
+    } else {
+      // Pas de section précédente, activer directement
+      targetSection.classList.add('active');
+      updateBackgroundColor(targetSection);
     }
-
-    targetSection.classList.add('active');
-
-    // Mettre à jour la couleur de fond
-    updateBackgroundColor(targetSection);
 
     // S'assurer que la transition est terminée même si l'événement transitionend n'est pas déclenché
     setTimeout(() => {
@@ -74,12 +94,10 @@ const TransitionController = (function() {
         state.previousSection.classList.remove('leaving');
       }
 
-      // Marquer comme transition terminée si ça n'a pas déjà été fait
-      if (state.isTransitioning) {
-        state.isTransitioning = false;
-        onTransitionComplete(targetSection);
-      }
-    }, config.animationDuration + 100);
+      // Marquer comme transition terminée
+      state.isTransitioning = false;
+      onTransitionComplete(targetSection);
+    }, 1500); // Délai plus long pour couvrir toutes les animations
 
     return true;
   }

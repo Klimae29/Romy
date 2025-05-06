@@ -1,69 +1,80 @@
 /**
- * Script pour appliquer un dégradé vert-bleu-orange aux sections du site
+ * Script pour appliquer un dégradé noir vers gris clair aux sections du site
  */
 
 document.addEventListener('DOMContentLoaded', function() {
   // Créer un élément style
   const styleElement = document.createElement('style');
 
-  // Définir les styles de dégradé vert-bleu-orange
+  // Définir les styles de dégradé noir vers gris clair
   styleElement.textContent = `
-    /* CSS pour créer un effet de dégradé du vert profond à l'orange entre les sections */
-    .section.project-section {
-      /* Crée un dégradé linéaire du haut vers le bas */
-      background: linear-gradient(to bottom, var(--section-color), var(--next-section-color)) !important;
-      transition: background 0.5s ease;
-    }
-
-    /* Définition des couleurs pour chaque section dans la progression vert → bleu → orange */
+    /* Définition des couleurs pour chaque section */
     #home {
-      --section-color: #0a3c20;       /* Vert forêt foncé pour commencer */
-      --next-section-color: #0d4e2c;  /* Vert forêt */
+      background-color: #000000 !important; /* Noir */
     }
 
     #allianz {
-      --section-color: #0d4e2c;       /* Vert forêt */
-      --next-section-color: #10604a;  /* Vert profond turquoise */
+      background-color: #141414 !important; /* Gris très foncé */
     }
 
     #carrefour {
-      --section-color: #10604a;       /* Vert profond turquoise */
-      --next-section-color: #126884;  /* Bleu-vert (transition) */
+      background-color: #282828 !important; /* Gris foncé */
     }
 
     #craftsmen {
-      --section-color: #126884;       /* Bleu-vert */
-      --next-section-color: #1469b1;  /* Bleu */
+      background-color: #3c3c3c !important; /* Gris charbon */
     }
 
     #bvlgari {
-      --section-color: #1469b1;       /* Bleu */
-      --next-section-color: #4357a5;  /* Bleu-violet */
+      background-color: #505050 !important; /* Gris moyen foncé */
     }
 
     #bordeaux {
-      --section-color: #4357a5;       /* Bleu-violet */
-      --next-section-color: #75467d;  /* Violet */
+      background-color: #646464 !important; /* Gris moyen */
     }
 
     #happn {
-      --section-color: #75467d;       /* Violet */
-      --next-section-color: #a84658;  /* Rouge-rose */
+      background-color: #787878 !important; /* Gris moyen clair */
     }
 
     #defense {
-      --section-color: #a84658;       /* Rouge-rose */
-      --next-section-color: #e06b2d;  /* Orange vif pour terminer */
+      background-color: #8c8c8c !important; /* Gris clair */
     }
 
-    /* Pour assurer que le gradient couvre toute la section */
-    .project-container {
-      background: transparent;
+    /* Assurer que les couleurs d'arrière-plan sont prioritaires */
+    .section {
+      background-color: var(--section-color, inherit);
+    }
+
+    /* Pour que le body reflète la couleur de la section active */
+    body {
+      transition: background-color 1.2s var(--anim-easing);
+      will-change: background-color;
     }
   `;
 
   // Ajouter le style au head du document
   document.head.appendChild(styleElement);
 
-  console.log('Dégradé vert-bleu-orange appliqué avec succès');
+  // Observer les changements de section active
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.attributeName === 'class') {
+        const section = mutation.target;
+        if (section.classList.contains('active')) {
+          // Appliquer la couleur d'arrière-plan de la section active au body
+          const sectionColor = getComputedStyle(section).backgroundColor;
+          document.body.style.backgroundColor = sectionColor;
+          console.log('Couleur appliquée:', sectionColor, 'pour la section', section.id);
+        }
+      }
+    });
+  });
+
+  // Observer toutes les sections
+  document.querySelectorAll('.section').forEach(function(section) {
+    observer.observe(section, { attributes: true });
+  });
+
+  console.log('Dégradé noir vers gris clair appliqué avec succès');
 });
