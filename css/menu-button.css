@@ -1,6 +1,6 @@
 .ligne-container {
   position: absolute;
-  top: 50px;
+  top: 80px;
   right: 40px;
   list-style: none;
   display: flex;
@@ -51,7 +51,7 @@
 
 
 .ligne.active::after {
-  transform: scaleX(2);
+  transform: scaleX(1.5);
 }
 
 .ligne:hover::after {
@@ -84,10 +84,33 @@
   right: calc(100% + 30px);
 }
 
+.menu-item {
+  all: unset; /* réinitialise tous les styles hérités */
+  color: white;
+  font-size: 0.8rem;
+  margin: 5px 0;
+  text-align: right;
+  cursor: pointer;
+  display: block;
+}
 
+.ligne.always-visible {
+  color: white;
+  font-size: 0.8rem;
+  padding-right: 5px;
+  background: none;
+  width: auto;
+  height: auto;
+}
 
+.ligne.always-visible::after {
+  display: none; /* pas besoin de la petite barre blanche pour Accueil */
+}
 
-
+.accueil:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
 
 
 #menuToggle {

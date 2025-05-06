@@ -1,21 +1,27 @@
 
-console.log("Page chargée avec succès !");
-// const home = document.querySelector("#home");
+console.log("🆗Page chargée avec succès !");
+const accueil = document.querySelector(".accueil");
 const allianz = document.querySelector("#allianz");
 const carrefour = document.querySelector("#carrefour");
 const craftsmen = document.querySelector("#craftsmen");
 const bvlgari = document.querySelector("#bvlgari");
 const bordeaux = document.querySelector("#bordeaux");
+const happn = document.querySelector("#happn");
+const defense = document.querySelector("#defense");
 const ligne1 = document.querySelector(".ligne-1");
 const ligne2 = document.querySelector(".ligne-2");
 const ligne3 = document.querySelector(".ligne-3");
 const ligne4 = document.querySelector(".ligne-4");
 const ligne5 = document.querySelector(".ligne-5");
 const ligne6 = document.querySelector(".ligne-6");
+const ligne7 = document.querySelector(".ligne-7");
+const ligne8 = document.querySelector(".ligne-8");
+
+
 
 // Fonction pour vérifier l'activation des sections et ajuster les lignes
 function updateMenuLines() {
-    console.log("Mise à jour des lignes");
+    console.log("🆗Mise à jour des lignes");
     // Si la section #home a la classe "active", on ajoute la classe "active" à ligne-1
     // if (home.classList.contains("active")) {
     //     ligne1.classList.add("active");
@@ -52,7 +58,18 @@ function updateMenuLines() {
     } else {
         ligne6.classList.remove("active");
     }
-
+    // Si la section #happn a la classe "active", on ajoute la classe "active" à ligne-6
+    if (happn.classList.contains("active")) {
+        ligne7.classList.add("active");
+    } else {
+        ligne7.classList.remove("active");
+    }
+    // Si la section #defense a la classe "active", on ajoute la classe "active" à ligne-7
+    if (defense.classList.contains("active")) {
+        ligne8.classList.add("active");
+    } else {
+        ligne8.classList.remove("active");
+    }
 }
 
 // Appel initial de la fonction
@@ -69,12 +86,14 @@ let debounceTimer;
 // FONCTION DE CLICK QUI RAMENE A LA BONNE SECTION
 // Lien entre chaque ligne et son ID de section
 const sectionMap = {
-  // "ligne-1": "home",
+
   "ligne-2": "allianz",
   "ligne-3": "carrefour",
   "ligne-4": "craftsmen",
   "ligne-5": "bvlgari",
-  "ligne-6": "bordeaux"
+  "ligne-6": "bordeaux",
+  "ligne-7": "happn",
+  "ligne-8": "defense"
 };
 
 // Récupère toutes les sections
@@ -96,13 +115,18 @@ Object.entries(sectionMap).forEach(([ligneClass, sectionId]) => {
   });
 });
 
-const accueillink = document.querySelector("#accueillink");
-const home = document.querySelector("#home");
-accueillink.addEventListener("click", () => {
-  home.classList.add("active");
-  allianz.classList.remove("active");
-  carrefour.classList.remove("active");
-  craftsmen.classList.remove("active");
-  bvlgari.classList.remove("active");
-  bordeaux.classList.remove("active");
+document.addEventListener("DOMContentLoaded", function() {
+  const accueillink = document.querySelector(".accueil");
+  const home = document.querySelector("#home");
+  accueillink.addEventListener("click", () => {
+    home.classList.add("active");
+    allianz.classList.remove("active");
+    carrefour.classList.remove("active");
+    craftsmen.classList.remove("active");
+    bvlgari.classList.remove("active");
+    bordeaux.classList.remove("active");
+    happn.classList.remove("active");
+    defense.classList.remove("active");
+  });
+  updateMenuLines();
 });
