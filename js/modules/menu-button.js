@@ -1,13 +1,6 @@
 console.log("🆗Page chargée avec succès !");
 
 const accueil = document.querySelector(".accueil");
-const allianz = document.querySelector("#allianz");
-const carrefour = document.querySelector("#carrefour");
-const craftsmen = document.querySelector("#craftsmen");
-const bvlgari = document.querySelector("#bvlgari");
-const bordeaux = document.querySelector("#bordeaux");
-const happn = document.querySelector("#happn");
-const defense = document.querySelector("#defense");
 const ligne1 = document.querySelector(".ligne-1");
 const ligne2 = document.querySelector(".ligne-2");
 const ligne3 = document.querySelector(".ligne-3");
@@ -16,6 +9,18 @@ const ligne5 = document.querySelector(".ligne-5");
 const ligne6 = document.querySelector(".ligne-6");
 const ligne7 = document.querySelector(".ligne-7");
 const ligne8 = document.querySelector(".ligne-8");
+const contact = document.querySelector('.contact')
+
+const home = document.querySelector("#home");
+const allianz = document.querySelector("#allianz");
+const carrefour = document.querySelector("#carrefour");
+const craftsmen = document.querySelector("#craftsmen");
+const bvlgari = document.querySelector("#bvlgari");
+const bordeaux = document.querySelector("#bordeaux");
+const happn = document.querySelector("#happn");
+const defense = document.querySelector("#defense");
+const contactSection = document.querySelector("#contact")
+
 const projetSection = document.querySelectorAll(".project-section");
 const ligneContainer = document.querySelector(".ligne-container");
 const logoRomy = document.querySelector(".logoRomy");
@@ -35,7 +40,6 @@ function toggleMenuVisibility() {
 
 // Fonction pour vérifier l'activation des sections et ajuster les lignes
 function updateMenuLines() {
-  console.log("🆗Mise à jour des lignes");
 
   // Mettre à jour l'état des lignes selon les sections actives
   if (allianz.classList.contains("active")) {
@@ -80,8 +84,9 @@ function updateMenuLines() {
     ligne8.classList.remove("active");
   }
 
+  console.log("🆗Mise à jour des lignes");
   toggleMenuVisibility();
-  console.log("Menu doit-il apparaître ?⁉️ ");
+
 }
 
 // Observer les changements de classe sur les sections projet
@@ -105,7 +110,7 @@ projetSection.forEach(section => {
 let debounceTimer;
 window.addEventListener('wheel', function() {
   clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(updateMenuLines, 200); // Attendre 200ms avant de relancer updateMenuLines
+  debounceTimer = setTimeout(updateMenuLines, 300); // Attendre 200ms avant de relancer updateMenuLines
 });
 
 // FONCTION DE CLICK QUI RAMENE A LA BONNE SECTION
@@ -139,10 +144,30 @@ Object.entries(sectionMap).forEach(([ligneClass, sectionId]) => {
   });
 });
 
+// Retour à l'accueil quand click sur bouton accueil
+
+// document.addEventListener("DOMContentLoaded", function() {
+//   const accueillink = document.querySelector(".accueil");
+//   const home = document.querySelector("#home");
+//   accueillink.addEventListener("click", () => {
+//     home.classList.add("active");
+//     allianz.classList.remove("active");
+//     carrefour.classList.remove("active");
+//     craftsmen.classList.remove("active");
+//     bvlgari.classList.remove("active");
+//     bordeaux.classList.remove("active");
+//     happn.classList.remove("active");
+//     defense.classList.remove("active");
+//   });
+
+//   // Retirer l'appel initial de toggleMenuVisibility()
+//   updateMenuLines();
+// });
+
 document.addEventListener("DOMContentLoaded", function() {
-  const accueillink = document.querySelector(".accueil");
-  const home = document.querySelector("#home");
-  accueillink.addEventListener("click", () => {
+  // Ajoute les événements aux boutons .accueil et .contact
+
+  accueil.addEventListener("click", () => {
     home.classList.add("active");
     allianz.classList.remove("active");
     carrefour.classList.remove("active");
@@ -151,8 +176,21 @@ document.addEventListener("DOMContentLoaded", function() {
     bordeaux.classList.remove("active");
     happn.classList.remove("active");
     defense.classList.remove("active");
+    contactSection.classList.remove("active");
   });
 
-  // Retirer l'appel initial de toggleMenuVisibility()
+  contact.addEventListener("click", () => {
+    home.classList.remove("active");
+    allianz.classList.remove("active");
+    carrefour.classList.remove("active");
+    craftsmen.classList.remove("active");
+    bvlgari.classList.remove("active");
+    bordeaux.classList.remove("active");
+    happn.classList.remove("active");
+    defense.classList.remove("active");
+    contactSection.classList.add("active");
+  });
+
+  // Met à jour les lignes du menu
   updateMenuLines();
 });

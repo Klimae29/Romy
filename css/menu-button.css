@@ -112,7 +112,7 @@
 
 
 
-.accueil:hover {
+.accueil:hover, .contact:hover {
   cursor: pointer;
   transform: scale(1.1);
 }
