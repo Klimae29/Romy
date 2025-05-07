@@ -17,9 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
 // Fonction qui démarre tous les modules dans l'ordre
 async function initSequence() {
   try {
-    // Démarrer les modules principaux dans l'ordre
-    // Mais vérifier que chaque module existe avant de l'initialiser
+    // Initialiser d'abord l'effet cinématographique de fond
+    if (window.CinemaBackgroundEffect) {
+      await initModule(window.CinemaBackgroundEffect);
+    }
 
+    // Démarrer les modules principaux dans l'ordre
     if (window.TransitionController) {
       await initModule(window.TransitionController);
     }
