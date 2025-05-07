@@ -156,3 +156,51 @@ body.transition-in-progress .section:not(.leaving) {
   visibility: hidden !important;
   opacity: 0 !important;
 }
+
+/* Assurer que les éléments d'animation de l'accueil sont bien masqués */
+.section:not(#home).active ~ #romy,
+.section:not(#home).active ~ #bg1,
+.section:not(#home).active ~ #bg2 {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    z-index: -100 !important;
+    pointer-events: none !important;
+}
+
+/* Empêcher les éléments d'animation d'interférer avec les autres sections */
+body:not(.home-active) #romy,
+body:not(.home-active) #bg1,
+body:not(.home-active) #bg2 {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    z-index: -100 !important;
+    pointer-events: none !important;
+}
+
+/* Classe pour forcer le fond dégradé pendant les transitions */
+.force-gradient-background::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at bottom center,
+    #182430 0%,
+    #23343e 50%,
+    #010306 100%
+  );
+  z-index: -5; /* Au-dessus des fonds d'animation mais sous le contenu */
+  pointer-events: none;
+}
+
+/* S'assurer que pendant les transitions, les éléments d'animation sont bien masqués */
+body.force-gradient-background #romy,
+body.force-gradient-background #bg1,
+body.force-gradient-background #bg2 {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  z-index: -100 !important;
+  background-image: none !important;
+}

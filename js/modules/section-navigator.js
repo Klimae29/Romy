@@ -92,16 +92,25 @@ const SectionNavigator = (function() {
     });
   }
 
-  // Navigation vers une section par index
+  // Fonction navigateToIndex modifiée dans section-navigator.js
   function navigateToIndex(index) {
     if (index < 0 || index >= sections.length || state.isScrolling) return;
 
     state.isScrolling = true;
     state.currentIndex = index;
+
+    // Vérifier si on quitte la page d'accueil
+    const leavingHome = state.currentIndex !== 0 && sections[0].classList.contains('active');
+
+    // Si on quitte la page d'accueil, arrêter complètement l'animation
+    if (leavingHome && window.HomeAnimator && window.HomeAnimator.stopAnimation) {
+        window.HomeAnimator.stopAnimation();
+    }
+
     updateActiveSection();
 
     setTimeout(() => {
-      state.isScrolling = false;
+        state.isScrolling = false;
     }, config.scrollDelay);
   }
 

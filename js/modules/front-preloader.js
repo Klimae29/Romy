@@ -1,10 +1,11 @@
 /**
  * font-preloader.js - Préchargement des polices pour l'animation ROMY
+ * Version autonome (remplace le préchargeur HTML supprimé)
  */
 
-// Script à ajouter avant l'initialisation de HomeAnimator
-
 const FontPreloader = {
+  name: "FontPreloader",
+
   fonts: [
     "'Playfair Display', serif",
     "'Amatic SC', cursive",
@@ -17,47 +18,60 @@ const FontPreloader = {
     "'Poppins', sans-serif",
   ],
 
-  // Préchargement actif des polices
-  preload() {
-    console.log("Préchargement des polices...");
+  preloaderElement: null,
 
-    // Créer un div caché pour précharger
-    const preloader = document.createElement('div');
-    preloader.className = 'font-preloader';
-    preloader.style.position = 'absolute';
-    preloader.style.left = '-9999px';
-    preloader.style.visibility = 'hidden';
-    preloader.style.opacity = '0';
+  init() {
+    console.log("FontPreloader: Initialisation...");
+
+    // Créer le préchargeur
+    this.preloaderElement = document.createElement('div');
+    this.preloaderElement.className = 'font-preloader';
+
+    // Styles pour masquer le préchargeur
+    Object.assign(this.preloaderElement.style, {
+      position: 'absolute',
+      left: '-9999px',
+      visibility: 'hidden',
+      opacity: '0',
+      pointerEvents: 'none'
+    });
 
     // Créer un span pour chaque police
     this.fonts.forEach(font => {
       const span = document.createElement('span');
       span.style.fontFamily = font;
       span.textContent = 'ROMY';
-      preloader.appendChild(span);
+      this.preloaderElement.appendChild(span);
     });
 
     // Ajouter au DOM
-    document.body.appendChild(preloader);
+    document.body.appendChild(this.preloaderElement);
 
-    console.log("✅ Préchargement des polices terminé");
+    console.log("✅ Préchargeur de polices créé");
 
-    // Retourner une promesse qui se résout quand les polices sont chargées
-    return new Promise(resolve => {
-      // Attendre que les polices soient chargées
-      document.fonts.ready.then(() => {
-        console.log("✅ Toutes les polices sont chargées!");
-        resolve();
-      });
-    });
+    // Retourner true pour la compatibilité avec votre fonction initModule
+    return true;
+  },
+
+  // Méthode utilitaire pour vérifier si les polices sont chargées
+  areAllFontsLoaded() {
+    return document.fonts.check("12px 'Playfair Display'") &&
+           document.fonts.check("12px 'Amatic SC'") &&
+           document.fonts.check("12px 'Anton'") &&
+           document.fonts.check("12px 'Orbitron'") &&
+           document.fonts.check("12px 'Pacifico'") &&
+           document.fonts.check("12px 'Poppins'");
+  },
+
+  // Nettoyage (optionnel - à appeler si vous voulez supprimer le préchargeur après initialisation)
+  cleanup() {
+    if (this.preloaderElement && this.preloaderElement.parentNode) {
+      this.preloaderElement.parentNode.removeChild(this.preloaderElement);
+      this.preloaderElement = null;
+      console.log("FontPreloader: Préchargeur supprimé");
+    }
   }
 };
 
-// Initialiser le préchargement des polices avant de démarrer l'animation
-document.addEventListener('DOMContentLoaded', async function() {
-  // Précharger les polices d'abord
-  await FontPreloader.preload();
-
-  // Puis initialiser les animations comme d'habitude
-  // L'initialisation du HomeAnimator se fera après que les polices soient chargées
-});
+// Exporter le module
+window.FontPreloader = FontPreloader;

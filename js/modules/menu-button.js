@@ -1,196 +1,230 @@
-console.log("🆗Page chargée avec succès !");
+/**
+ * menu-button.js - Gestion des interactions avec les menus de navigation
+ * Version refactorisée pour utiliser SectionNavigator et arrêter correctement les animations
+ */
 
-const accueil = document.querySelector(".accueil");
-const ligne1 = document.querySelector(".ligne-1");
-const ligne2 = document.querySelector(".ligne-2");
-const ligne3 = document.querySelector(".ligne-3");
-const ligne4 = document.querySelector(".ligne-4");
-const ligne5 = document.querySelector(".ligne-5");
-const ligne6 = document.querySelector(".ligne-6");
-const ligne7 = document.querySelector(".ligne-7");
-const ligne8 = document.querySelector(".ligne-8");
-const contact = document.querySelector('.contact')
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("🆗 Initialisation du menu...");
 
-const home = document.querySelector("#home");
-const allianz = document.querySelector("#allianz");
-const carrefour = document.querySelector("#carrefour");
-const craftsmen = document.querySelector("#craftsmen");
-const bvlgari = document.querySelector("#bvlgari");
-const bordeaux = document.querySelector("#bordeaux");
-const happn = document.querySelector("#happn");
-const defense = document.querySelector("#defense");
-const contactSection = document.querySelector("#contact")
+  // Références aux éléments principaux
+  const accueil = document.querySelector(".accueil");
+  const contact = document.querySelector(".contact"); // Ajout de la référence à contact
+  const projetSections = document.querySelectorAll(".project-section");
+  const ligneContainer = document.querySelector(".ligne-container");
+  const logoRomy = document.querySelector(".logoRomy");
+  const sections = document.querySelectorAll(".section");
 
-const projetSection = document.querySelectorAll(".project-section");
-const ligneContainer = document.querySelector(".ligne-container");
-const logoRomy = document.querySelector(".logoRomy");
+  // Mapping des lignes vers les sections
+  const sectionMap = {
+    "ligne-2": "allianz",
+    "ligne-3": "carrefour",
+    "ligne-4": "craftsmen",
+    "ligne-5": "bvlgari",
+    "ligne-6": "bordeaux",
+    "ligne-7": "happn",
+    "ligne-8": "defense"
+  };
 
-// Fonction pour ne pas afficher le menu sur la page d'accueil
+  /**
+   * Fonction pour afficher/masquer le menu selon la section active
+   */
+  function toggleMenuVisibility() {
+    console.log("🔄 Mise à jour de la visibilité du menu");
 
-function toggleMenuVisibility() {
-  const showMenu = Array.from(projetSection).some(section =>
-    section.classList.contains("active")
-  );
+    // Vérifier si une section de projet est active
+    const showMenu = Array.from(projetSections).some(section =>
+      section.classList.contains("active")
+    );
 
-  ligneContainer.style.opacity = showMenu ? "0.6" : "0";
-  ligneContainer.style.pointerEvents = showMenu ? "auto" : "none";
-  logoRomy.style.opacity = showMenu ? "0.6" : "0";
-  logoRomy.style.pointerEvents = showMenu ? "auto" : "none";
-}
-
-// Fonction pour vérifier l'activation des sections et ajuster les lignes
-function updateMenuLines() {
-
-  // Mettre à jour l'état des lignes selon les sections actives
-  if (allianz.classList.contains("active")) {
-    ligne2.classList.add("active");
-  } else {
-    ligne2.classList.remove("active");
+    // Afficher/masquer les éléments de navigation
+    ligneContainer.style.opacity = showMenu ? "0.6" : "0";
+    ligneContainer.style.pointerEvents = showMenu ? "auto" : "none";
+    logoRomy.style.opacity = showMenu ? "0.6" : "0";
+    logoRomy.style.pointerEvents = showMenu ? "auto" : "none";
   }
 
-  if (carrefour.classList.contains("active")) {
-    ligne3.classList.add("active");
-  } else {
-    ligne3.classList.remove("active");
+  /**
+   * Mise à jour de l'état des lignes du menu selon la section active
+   */
+  function updateMenuLines() {
+    console.log("🔄 Mise à jour des indicateurs de menu");
+
+    // Parcourir toutes les correspondances sections/lignes
+    Object.entries(sectionMap).forEach(([lineClass, sectionId]) => {
+      const lineElement = document.querySelector(`.${lineClass}`);
+      const sectionElement = document.getElementById(sectionId);
+
+      if (lineElement && sectionElement) {
+        // Mettre à jour la classe active si nécessaire
+        if (sectionElement.classList.contains("active")) {
+          lineElement.classList.add("active");
+        } else {
+          lineElement.classList.remove("active");
+        }
+      }
+    });
+
+    // Mettre à jour la visibilité globale du menu
+    toggleMenuVisibility();
   }
 
-  if (craftsmen.classList.contains("active")) {
-    ligne4.classList.add("active");
-  } else {
-    ligne4.classList.remove("active");
+  /**
+   * Configuration des gestionnaires d'événements pour les lignes du menu
+   */
+  function setupLineNavigation() {
+    // Configurer chaque ligne du menu
+    Object.entries(sectionMap).forEach(([lineClass, sectionId]) => {
+      const lineElement = document.querySelector(`.${lineClass}`);
+
+      if (lineElement) {
+        lineElement.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          console.log(`🖱️ Clic sur la ligne ${lineClass} vers la section ${sectionId}`);
+
+          // Utiliser SectionNavigator si disponible
+          if (window.SectionNavigator && typeof window.SectionNavigator.navigateTo === 'function') {
+            window.SectionNavigator.navigateTo(sectionId);
+          } else {
+            console.warn("⚠️ SectionNavigator non disponible, fallback à la méthode manuelle");
+
+            // Fallback: méthode manuelle
+            sections.forEach(section => section.classList.remove("active"));
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.classList.add("active");
+
+            // Arrêter l'animation si on quitte la page d'accueil
+            if (window.HomeAnimator && window.HomeAnimator.stopAnimation) {
+              window.HomeAnimator.stopAnimation();
+            }
+
+            // Mise à jour des indicateurs
+            updateMenuLines();
+          }
+        });
+      }
+    });
   }
 
-  if (bvlgari.classList.contains("active")) {
-    ligne5.classList.add("active");
-  } else {
-    ligne5.classList.remove("active");
-  }
+  /**
+   * Configuration du lien "Accueil"
+   */
+  function setupHomeLink() {
+    if (accueil) {
+      accueil.addEventListener("click", (event) => {
+        event.preventDefault();
 
-  if (bordeaux.classList.contains("active")) {
-    ligne6.classList.add("active");
-  } else {
-    ligne6.classList.remove("active");
-  }
+        console.log("🏠 Navigation vers l'accueil");
 
-  if (happn.classList.contains("active")) {
-    ligne7.classList.add("active");
-  } else {
-    ligne7.classList.remove("active");
-  }
+        // Utiliser SectionNavigator si disponible
+        if (window.SectionNavigator && typeof window.SectionNavigator.navigateTo === 'function') {
+          window.SectionNavigator.navigateTo("home");
+        } else {
+          console.warn("⚠️ SectionNavigator non disponible, fallback à la méthode manuelle");
 
-  if (defense.classList.contains("active")) {
-    ligne8.classList.add("active");
-  } else {
-    ligne8.classList.remove("active");
-  }
+          // Fallback: méthode manuelle
+          sections.forEach(section => section.classList.remove("active"));
+          const homeSection = document.getElementById("home");
+          if (homeSection) homeSection.classList.add("active");
 
-  console.log("🆗Mise à jour des lignes");
-  toggleMenuVisibility();
+          // Réinitialiser l'animation après un court délai
+          setTimeout(() => {
+            if (window.HomeAnimator && window.HomeAnimator.resetAnimation) {
+              window.HomeAnimator.resetAnimation();
+            }
+          }, 100);
 
-}
-
-// Observer les changements de classe sur les sections projet
-const observer = new MutationObserver((mutationsList) => {
-  for (const mutation of mutationsList) {
-    if (
-      mutation.type === "attributes" &&
-      mutation.attributeName === "class"
-    ) {
-      updateMenuLines();
+          // Mise à jour des indicateurs
+          updateMenuLines();
+        }
+      });
     }
   }
-});
 
-// Appliquer l'observateur à chaque section projet
-projetSection.forEach(section => {
-  observer.observe(section, { attributes: true });
-});
+  /**
+ * Configuration du lien "Contact"
+ */
+  function setupContactLink() {
+    if (contact) {
+      contact.addEventListener("click", (event) => {
+        event.preventDefault();
 
-// Relancer la fonction à chaque événement de défilement (wheel)
-let debounceTimer;
-window.addEventListener('wheel', function() {
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(updateMenuLines, 300); // Attendre 200ms avant de relancer updateMenuLines
-});
+        console.log("📧 Navigation vers contact");
 
-// FONCTION DE CLICK QUI RAMENE A LA BONNE SECTION
-// Lien entre chaque ligne et son ID de section
-const sectionMap = {
-  "ligne-2": "allianz",
-  "ligne-3": "carrefour",
-  "ligne-4": "craftsmen",
-  "ligne-5": "bvlgari",
-  "ligne-6": "bordeaux",
-  "ligne-7": "happn",
-  "ligne-8": "defense"
-};
+        // Utiliser SectionNavigator si disponible
+        if (window.SectionNavigator && typeof window.SectionNavigator.navigateTo === 'function') {
+          window.SectionNavigator.navigateTo("contact");
+        } else {
+          console.warn("⚠️ SectionNavigator non disponible, fallback à la méthode manuelle");
 
-// Récupère toutes les sections
-const sections = document.querySelectorAll(".section");
+          // Fallback: méthode manuelle
+          sections.forEach(section => section.classList.remove("active"));
+          const contactSection = document.getElementById("contact");
+          if (contactSection) contactSection.classList.add("active");
 
-// Boucle sur chaque entrée du tableau
-Object.entries(sectionMap).forEach(([ligneClass, sectionId]) => {
-  const ligneElement = document.querySelector(`.${ligneClass}`);
-  ligneElement.addEventListener("click", () => {
-    // Supprime "active" de toutes les sections
-    sections.forEach(section => section.classList.remove("active"));
+          // Mise à jour des indicateurs
+          updateMenuLines();
+        }
+      });
+    }
+  }
 
-    // Ajoute "active" uniquement à la section correspondante
-    const targetSection = document.getElementById(sectionId);
-    if (targetSection) targetSection.classList.add("active");
+  /**
+   * Configurer l'observateur pour détecter les changements de section
+   */
+  function setupSectionObserver() {
+    // Observer les changements de classe sur les sections
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === "attributes" && mutation.attributeName === "class") {
+          updateMenuLines();
+        }
+      }
+    });
 
-    // Met à jour les lignes du menu
-    updateMenuLines();
-  });
-});
+    // Appliquer l'observateur à toutes les sections
+    sections.forEach(section => {
+      observer.observe(section, { attributes: true });
+    });
+  }
 
-// Retour à l'accueil quand click sur bouton accueil
+  /**
+   * Configurer la détection du défilement pour mettre à jour le menu
+   */
+  function setupScrollDetection() {
+    let debounceTimer;
+    window.addEventListener('wheel', function() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(updateMenuLines, 200);
+    });
+  }
 
-// document.addEventListener("DOMContentLoaded", function() {
-//   const accueillink = document.querySelector(".accueil");
-//   const home = document.querySelector("#home");
-//   accueillink.addEventListener("click", () => {
-//     home.classList.add("active");
-//     allianz.classList.remove("active");
-//     carrefour.classList.remove("active");
-//     craftsmen.classList.remove("active");
-//     bvlgari.classList.remove("active");
-//     bordeaux.classList.remove("active");
-//     happn.classList.remove("active");
-//     defense.classList.remove("active");
-//   });
+  /**
+   * Répondre aux événements de transition entre sections
+   */
+  function setupTransitionListener() {
+    document.addEventListener('sectionTransitionComplete', function(event) {
+      if (event.detail && event.detail.section) {
+        console.log(`🔄 Transition complétée vers la section: ${event.detail.section.id}`);
+        updateMenuLines();
+      }
+    });
+  }
 
-//   // Retirer l'appel initial de toggleMenuVisibility()
-//   updateMenuLines();
-// });
 
-document.addEventListener("DOMContentLoaded", function() {
-  // Ajoute les événements aux boutons .accueil et .contact
+  // Initialisation
+  function initialize() {
+    setupLineNavigation();
+    setupHomeLink();
+    setupContactLink(); // Ajout de l'initialisation du lien Contact
+    setupSectionObserver();
+    setupScrollDetection();
+    setupTransitionListener();
+    updateMenuLines(); // État initial
 
-  accueil.addEventListener("click", () => {
-    home.classList.add("active");
-    allianz.classList.remove("active");
-    carrefour.classList.remove("active");
-    craftsmen.classList.remove("active");
-    bvlgari.classList.remove("active");
-    bordeaux.classList.remove("active");
-    happn.classList.remove("active");
-    defense.classList.remove("active");
-    contactSection.classList.remove("active");
-  });
+    console.log("✅ Menu et navigation initialisés avec succès");
+  }
 
-  contact.addEventListener("click", () => {
-    home.classList.remove("active");
-    allianz.classList.remove("active");
-    carrefour.classList.remove("active");
-    craftsmen.classList.remove("active");
-    bvlgari.classList.remove("active");
-    bordeaux.classList.remove("active");
-    happn.classList.remove("active");
-    defense.classList.remove("active");
-    contactSection.classList.add("active");
-  });
-
-  // Met à jour les lignes du menu
-  updateMenuLines();
+  // Démarrer l'initialisation
+  initialize();
 });

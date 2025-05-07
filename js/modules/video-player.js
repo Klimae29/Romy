@@ -152,6 +152,81 @@ const VideoPlayer = (function() {
         pauseBar2.style.height = '100%';
         pauseBar2.style.backgroundColor = 'white';
 
+      // Créer et ajouter le bouton replay avec une flèche arrondie plus claire
+      if (controls) {
+        // Chercher si un bouton replay existe déjà
+        let replayButton = controls.querySelector('.replay-button');
+
+        // Si le bouton n'existe pas, le créer
+        if (!replayButton) {
+          replayButton = document.createElement('div');
+          replayButton.className = 'replay-button';
+          replayButton.style.position = 'relative';
+          replayButton.style.width = '24px';
+          replayButton.style.height = '24px';
+          replayButton.style.cursor = 'pointer';
+          replayButton.style.marginRight = '10px';
+
+          // Créer l'icône SVG pour le replay (bien plus claire)
+          const svgNS = "http://www.w3.org/2000/svg";
+          const replaySvg = document.createElementNS(svgNS, "svg");
+          replaySvg.setAttribute("width", "20");
+          replaySvg.setAttribute("height", "20");
+          replaySvg.setAttribute("viewBox", "0 0 24 24");
+          replaySvg.style.position = 'absolute';
+          replaySvg.style.top = '50%';
+          replaySvg.style.left = '50%';
+          replaySvg.style.transform = 'translate(-50%, -50%)';
+          replaySvg.style.opacity = '0.8';
+          replaySvg.style.transition = 'opacity 0.2s ease';
+
+          // Créer le path pour la flèche arrondie
+          const replayPath = document.createElementNS(svgNS, "path");
+          replayPath.setAttribute("d", "M12,5V1L7,6l5,5V7c3.31,0,6,2.69,6,6s-2.69,6-6,6s-6-2.69-6-6H4c0,4.42,3.58,8,8,8s8-3.58,8-8S16.42,5,12,5z");
+          replayPath.setAttribute("fill", "white");
+
+          // Assembler l'icône SVG
+          replaySvg.appendChild(replayPath);
+          replayButton.appendChild(replaySvg);
+
+          // Ajouter le bouton après le bouton play/pause
+          const playButton = controls.querySelector('.play-button');
+          if (playButton && playButton.nextSibling) {
+            controls.insertBefore(replayButton, playButton.nextSibling);
+          } else if (playButton) {
+            controls.insertBefore(replayButton, controls.firstChild.nextSibling);
+          } else {
+            controls.insertBefore(replayButton, controls.firstChild);
+          }
+
+          // Effet de survol
+          replayButton.addEventListener('mouseenter', () => {
+            replaySvg.style.opacity = '1';
+          });
+
+          replayButton.addEventListener('mouseleave', () => {
+            replaySvg.style.opacity = '0.8';
+          });
+
+          // Ajouter la fonctionnalité replay
+          replayButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            // Remettre la vidéo au début
+            video.currentTime = 0;
+
+            // Lancer la lecture
+            video.play().catch(err => console.error("Erreur de lecture (replay):", err));
+
+            // Mettre à jour l'interface
+            updatePlayButton(player, false);
+
+            // Journalisation pour le débogage
+            console.log(`Vidéo relancée depuis le début (replay): ${video.id}`);
+          });
+        }
+      }
+
         // Assembler les éléments
         pauseIcon.appendChild(pauseBar1);
         pauseIcon.appendChild(pauseBar2);
@@ -672,10 +747,6 @@ const VideoPlayer = (function() {
     checkActiveSection: checkActiveSection
   };
 })();
-
-/**
- * Effet de pellicule vidéo - Version corrigée pour votre HTML
- */
 
 // Fonction autonome à intégrer dans votre video-player.js
 function createFilmEffect() {

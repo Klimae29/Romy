@@ -1,7 +1,7 @@
 .ligne-container {
   position: absolute;
-  top: 80px;
-  right: 40px;
+  top: 12%;
+  right: 4vw;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -49,8 +49,6 @@
   background: transparent;
   pointer-events: auto;
 }
-
-
 
 
 .ligne.active::after {
@@ -110,12 +108,18 @@
   display: none; /* pas besoin de la petite barre blanche pour Accueil */
 }
 
-
+.accueil, .contact {
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
 
 .accueil:hover, .contact:hover {
   cursor: pointer;
   transform: scale(1.1);
 }
+
 
 
 #menuToggle {
@@ -132,7 +136,7 @@
   left: 40px;
   z-index: 150;
   opacity: 0;
-  font-size: 30px;
+  font-size: 1rem;
   width: 100px;
   pointer-events: none;
   transition: opacity 0.5s ease;
