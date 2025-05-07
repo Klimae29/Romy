@@ -23,10 +23,9 @@ const TransitionController = (function() {
 
   // Mise à jour de la couleur de fond selon la section
   function updateBackgroundColor(section) {
-    if (!section) return;
-
-    const bgColor = section.dataset.bgColor || '#000';
-    document.body.style.backgroundColor = bgColor;
+    // Ne rien faire car nous utilisons maintenant le fond en dégradé conique global
+    // Cette fonction est conservée pour la compatibilité avec le code existant
+    return;
   }
 
   // Configuration de l'observateur pour les transitions
@@ -78,13 +77,13 @@ const TransitionController = (function() {
         document.body.classList.remove('transition-in-progress');
         targetSection.classList.add('active');
 
-        // Mettre à jour la couleur de fond
-        updateBackgroundColor(targetSection);
+        // La mise à jour de la couleur de fond est désactivée car nous utilisons un fond global
+        // updateBackgroundColor(targetSection);
       }, 600); // Durée fixe correspondant à --fade-out-duration (0.6s)
     } else {
       // Pas de section précédente, activer directement
       targetSection.classList.add('active');
-      updateBackgroundColor(targetSection);
+      // updateBackgroundColor(targetSection); // Désactivé
     }
 
     // S'assurer que la transition est terminée même si l'événement transitionend n'est pas déclenché
@@ -126,9 +125,11 @@ const TransitionController = (function() {
 
     // État initial
     state.currentSection = document.querySelector('.section.active');
-    if (state.currentSection) {
-      updateBackgroundColor(state.currentSection);
-    }
+
+    // Ne pas mettre à jour la couleur de fond car nous utilisons un fond global
+    // if (state.currentSection) {
+    //   updateBackgroundColor(state.currentSection);
+    // }
 
     console.log("TransitionController: Initialisation terminée!");
     return true;
