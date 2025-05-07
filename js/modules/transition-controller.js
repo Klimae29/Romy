@@ -44,7 +44,8 @@ const TransitionController = (function() {
     });
   }
 
-  // Transition vers une nouvelle section avec délai pour animations de sortie
+  // Dans la fonction transitionTo de transition-controller.js
+  // Dans la fonction transitionTo de transition-controller.js
   function transitionTo(targetSection) {
     if (state.isTransitioning || !targetSection) return false;
 
@@ -54,6 +55,36 @@ const TransitionController = (function() {
     // Stocker la référence à la section précédente
     state.previousSection = state.currentSection;
     state.currentSection = targetSection;
+
+    // Si la section précédente est 'home', nettoyer juste les éléments d'animation
+    if (state.previousSection && state.previousSection.id === 'home') {
+      console.log("TransitionController: Quittant la section d'accueil");
+
+      // Arrêter l'animation sans détruire le module
+      if (window.HomeAnimator && window.HomeAnimator.stopAnimation) {
+        window.HomeAnimator.stopAnimation();
+      }
+
+      // Masquer uniquement les éléments spécifiques d'animation
+      const bg1 = document.getElementById('bg1');
+      const bg2 = document.getElementById('bg2');
+      const romy = document.getElementById('romy');
+
+      if (bg1) {
+        bg1.style.opacity = "0";
+        bg1.style.visibility = "hidden";
+      }
+
+      if (bg2) {
+        bg2.style.opacity = "0";
+        bg2.style.visibility = "hidden";
+      }
+
+      if (romy) {
+        romy.style.opacity = "0";
+        romy.style.visibility = "hidden";
+      }
+    }
 
     // SOLUTION RADICALE : Isoler complètement les deux phases
     if (state.previousSection) {
@@ -76,14 +107,10 @@ const TransitionController = (function() {
         // 3. Seulement APRÈS l'animation de sortie, activer la nouvelle section
         document.body.classList.remove('transition-in-progress');
         targetSection.classList.add('active');
-
-        // La mise à jour de la couleur de fond est désactivée car nous utilisons un fond global
-        // updateBackgroundColor(targetSection);
       }, 600); // Durée fixe correspondant à --fade-out-duration (0.6s)
     } else {
       // Pas de section précédente, activer directement
       targetSection.classList.add('active');
-      // updateBackgroundColor(targetSection); // Désactivé
     }
 
     // S'assurer que la transition est terminée même si l'événement transitionend n'est pas déclenché
@@ -103,16 +130,24 @@ const TransitionController = (function() {
 
   // Actions à exécuter une fois la transition terminée
   function onTransitionComplete(section) {
-    // Déclencher l'événement personnalisé pour informer les autres modules
-    const event = new CustomEvent('sectionTransitionComplete', {
-      detail: {
-        section: section,
-        previousSection: state.previousSection
-      }
-    });
-    document.dispatchEvent(event);
+    // Actions existantes...
 
-    console.log('Transition complétée pour la section:', section.id);
+    // Si la section active n'est pas 'home', s'assurer que l'animation est bien arrêtée
+    if (section.id !== 'home' && window.HomeAnimator) {
+        window.HomeAnimator.stopAnimation();
+
+        // Forcer une vérification supplémentaire pour masquer les éléments d'animation
+        const homeElements = document.querySelectorAll('#romy, #bg1, #bg2');
+        homeElements.forEach(el => {
+            if (el) {
+                el.style.opacity = "0";
+                el.style.visibility = "hidden";
+                el.style.zIndex = "-10";
+            }
+        });
+    }
+
+    // Événement personnalisé et log existants...
   }
 
   // Initialisation
