@@ -1,0 +1,75 @@
+/* Menu-Color */
+
+/* ===== LIGNES DU MENU ===== */
+/* Couleur de base des lignes */
+.ligne::after {
+  background-color: #23343e !important; /* Bleu foncé */
+}
+
+/* Couleur au survol des lignes */
+.ligne:hover::after {
+  background-color: #F5C518 !important; /* Jaune doré */
+}
+
+/* Couleur des lignes actives */
+.ligne.active::after {
+  background-color: #F5C518 !important; /* Jaune doré */
+}
+
+/* ===== ACCUEIL ET CONTACT ===== */
+/* Style de base (sans agrandissement) */
+.accueil, .contact {
+  cursor: pointer;
+  color: #23343e !important; /* Bleu foncé */
+  font-size: 1rem;
+  transition: color 0.3s ease !important; /* Transition uniquement pour la couleur */
+  transform: none !important; /* Force la taille normale */
+}
+
+/* Au survol : changement de couleur sans agrandissement */
+.accueil:hover, .contact:hover {
+  color: #F5C518 !important; /* Jaune doré */
+  transform: none !important; /* Force l'absence d'agrandissement */
+}
+
+/* ===== TEXTE AU SURVOL (HOVER-TEXT) ===== */
+/* Apparence de base du hover-text */
+.hover-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #23343e !important; /* Bleu foncé par défaut */
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+
+/* Position standard */
+.ligne .hover-text {
+  right: calc(100% + 10px);
+}
+
+/* Position pour ligne active */
+.ligne.active .hover-text {
+  right: calc(100% + 30px);
+}
+
+/* ⚠️ IMPORTANT : Texte jaune au survol - cette règle doit être après les autres */
+.ligne:hover .hover-text {
+  opacity: 1;
+  color: #F5C518 !important; /* Jaune doré avec priorité maximale */
+}
+
+/* Couleur pour les lignes actives */
+.ligne.active .hover-text {
+  color: #F5C518 !important; /* Jaune doré */
+}
+
+.contact.active,
+.accueil.active {
+  color: #F5C518 !important; /* Jaune doré */
+}

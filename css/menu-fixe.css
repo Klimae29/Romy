@@ -1,0 +1,70 @@
+/* menu-fixe.css */
+/* Styles pour assurer que le menu reste visible pendant les transitions */
+
+/* Mettre z-index élevé pour s'assurer que le menu reste au-dessus des animations */
+.ligne-container {
+  position: fixed !important; /* Fixed au lieu de absolute pour rester en place */
+  z-index: 2000 !important; /* Valeur très élevée pour être au-dessus de tout */
+  transition: opacity 0.4s ease !important; /* Transition plus rapide */
+  will-change: opacity; /* Optimisation pour animations fluides */
+}
+
+/* Logo ROMY également fixe */
+.logoRomy {
+  position: fixed !important; /* Fixed au lieu de relative pour rester en place */
+  z-index: 1500 !important; /* Z-index élevé mais moins que le menu */
+  transition: opacity 0.4s ease !important; /* Transition plus rapide */
+  will-change: opacity; /* Optimisation pour animations fluides */
+}
+
+/* Assurer que les sections n'interfèrent pas avec le menu */
+.section {
+  z-index: 10; /* Z-index inférieur au menu */
+}
+
+/* Améliorer le contraste des lignes */
+.ligne::after {
+  background-color: rgba(255, 255, 255, 0.9) !important; /* Plus blanc pour meilleur contraste */
+}
+
+/* Animation lors du hover sur une ligne */
+.ligne:hover::after {
+  transform: scaleX(1.2); /* Légère animation au survol */
+}
+
+/* Style pour l'élément actif */
+.ligne.active::after {
+  background-color: white !important; /* Blanc pur pour l'élément actif */
+  transform: scaleX(1.5); /* Plus large pour l'élément actif */
+}
+
+/* Amélioration du texte au survol */
+.hover-text {
+  background-color: rgba(0, 0, 0, 0.7); /* Fond légèrement opaque */
+  font-weight: 400; /* Légèrement plus gras */
+}
+
+/* Assurer que l'accueil et contact sont bien visibles */
+.accueil, .contact {
+  opacity: 0.9; /* Plus visible */
+  font-weight: 400; /* Légèrement plus gras */
+}
+
+/* Classe spéciale pour forcer le menu à rester visible pendant les transitions */
+.menu-visible {
+  opacity: 0.6 !important;
+  pointer-events: auto !important;
+}
+
+/* Optimisation pour éviter les problèmes pendant les transitions */
+body.transition-in-progress .ligne-container,
+body.transition-in-progress .logoRomy {
+  transition: none !important; /* Pas de transition pendant les transitions de page */
+}
+
+/* S'assurer que le menu n'est jamais masqué sauf sur la page d'accueil */
+body:not(.home-active) .ligne-container,
+body:not(.home-active) .logoRomy {
+  opacity: 0.6 !important;
+  pointer-events: auto !important;
+}
